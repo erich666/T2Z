@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <title>Freezing Time: Sculptures From Animations</title>
+    <!-- Include meta tag to ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include bootstrap stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+
+    <!-- Get and configure MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <style type="text/css">
+      .codeText { font-weight:normal; font-family: Courier, monospace; color:rgb(0,0,0); }
+      h1 { font-family: 'Montserrat', sans-serif; margin-top: 60px; }
+      h2 { font-family: 'Montserrat', sans-serif; margin-top: 60px; }
+      h3 { font-family: 'Montserrat', sans-serif; margin-top: 60px; }
+      h4 { font-family: 'Montserrat', sans-serif; margin-top: 30px; }
+      figcaption { color:#660000; padding-top:10px; padding-bottom:30px; }
+	  figure { padding-top:30px; text-align:center; }
+    </style>
+
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+
+<body>
+<div class="container">
+
+<center>
+<h1>Freezing Time: Sculptures From Animations</h1>
+Andrew Glassner<br/>
+<a href="http://www.imaginary-institute.com" target="_blank">The 
+Imaginary Institute</a><br/>
+andrew@imaginary-institute.com</br/>
+<br/>
+Eric Haines<br/>
+<a href="http://www.autodesk.com" target="_blank">Autodesk.com</a><br/>
+erich@acm.org<br/>
+<br/>
+Version 1.0: 15 July 2015<br/>
+<br/>
+</center>
+
+<h1>What's This Thing?</h1>
+<p>
+<b>Freezing Time</b> is a project to help you create cool
+animation loops,
+and then turn them into cool 3D objects that you can print
+and hold in your hand.
+</p>
+<p>
+We create the 3D sculptures by imagining the frames of
+your animation in one big stack.
+We carve away all the pixels that have the color
+of the background,
+and what's left becomes your model!
+</p>
+<p>
+When you're ready,
+you can open up the code and write your own animations.
+Our examples are just a start!
+</p>
+<p>
+We call our process <em>Freezing Time</em>.
+The code we wrote to carry it out is called
+<b>Project T2Z</b>, because
+it places time on the Z axis.
+
+<h3>What's This Doc?</h3>
+<p>
+A bare-bones, get-started-quick overview.
+</p>
+<p>
+When you're ready to write your own
+animations, the comments in the code
+will be your guides.
+</p>
+
+<h1>Installation</h1>
+<p>
+To get started, download and install these two
+free, open-source programs and install them.
+Both have versions for Windows, Mac OSX, and Linux.
+</p>
+<ul>
+<li><a href="http://www.processing.org" target="_new">Processing</a>: 
+This is a graphics programming language based on Java. 
+There's an IDE (Integrated Programming Environment - basically
+an editor along with buttons to let you run your program).
+You'll be running the system from within Processing.
+</li>
+<li><a href="http://meshlab.sourceforge.net/ target="_new">MeshLab</a>:
+This is a great program for interactively viewing your 3D models.
+</ul>
+<p>
+You'll also need to install three Processing libraries.
+The easiest way to install the libraries is to run Processing
+and let it do the installation itself,
+using its built-in the Library Manager.
+To open up the Library Manager, 
+go to the menu bar, and choose
+<em>Sketch/Import Library.../Add Library</em>,
+as shown in the figure below.
+You'll get a pop-up menu, also, shown in the figure.
+</p>
+
+<figure>
+<img src="images/LibraryManager.png" alt="The Library Manager." width="100%">
+<figcaption>
+Left: Choosing the Library Manager.
+Right: The Library Manager.
+</figcaption>
+</figure>
+
+<p>
+From the pop-up, choose these three libraries
+one by one, and install each one:
+</p>
+<ul>
+<li>Andrew's Utilities (AULib)</li>
+<li>G4P</li>
+<li>gifExporter</li>
+</ul>
+
+<p>
+Finally, our code itself.
+</p>
+<ul><li> Get the source in a zip
+file from the 
+<a href="http://bit.ly/t2zspot" target="_blank">T2Z spot</a>.
+</li>
+</ul>
+<p>
+Unzip it and place the resulting <em>ProjectT2Z</em> 
+folder somewhere convenient.
+It's important that you don't rename the folder!
+You can put it anywhere you like, but Processing has
+some requirements about matching the name of the folder
+to the files it contains,
+so don't change the name.
+</p>
+
+<h1>Running the Program</h1>
+
+<p>
+Open the folder and double-click on 
+the file <em>ProjectT2Z.pde</em>.
+That should open up Processing, and you'll see something
+like the figure below.
+If that doesn't happen, start Processing manually,
+then choose <em>File/Open...</em> from the menu bar,
+and open the file <em>ProjectT2Z.pde</em> in the <em>ProjectT2Z</em>
+folder you unzipped during installation.
+(note: some of the figures show some variations
+on the name <em>Project323</em> rather than <em>ProjectT2Z</em>.
+Don't worry, that was just an earlier name).
+</p>
+
+<figure>
+<img src="images/ProcessingIDE.png" alt="Screenshot" width="100%">
+<figcaption>
+Left: The Processing environment that opens up when you
+double-click on <em>ProjectT2Z.pde</em>.
+Right: The "start" and "stop" buttons.
+</figcaption>
+</figure>
+
+<p>
+This is the Processing IDE.
+You can select any of the tabs along the top to 
+see the file it contains.
+And, of course, you can edit the code,
+when you're ready to do that.
+</p>
+<p>
+For now, <b>start</b> the program by pressing
+the big right-pointing arrow in the upper-left of the IDE.
+When you want to quit, you can do that in four ways:
+</p>
+<ul>
+<li>Click the <em>Exit</em> button in the <em>Sculpture Controls</em> window 
+(upper-right in the figure), and confirm you want to quit.</li>
+<li>Move the mouse into the <em>Sketch Window</em> (lower-right 
+in the figure) and press the escape key on your keyboard.</li>
+<li>Click the close box on the <em>Sketch Window</em>.</li>
+<li>Click the square <em>Stop</em> button in the Processing IDE.</li>
+</ul>
+
+<h1>Overview of the UI</h1>
+<p>
+Let's jump right into things. I strongly suggest
+that you open the project and run it,
+trying things out as we discuss them.
+</p>
+<p>
+There are four windows: three with user interface
+controls and one where you preview your animation.
+</p>
+
+<figure>
+<img src="images/UIComp.png" alt="User Interface Windows" width="50%">
+<figcaption>
+The four windows of the UI.
+</figcaption>
+</figure>
+
+
+<h1>Animation Controls</h1>
+
+<figure>
+<img src="images/AnimationControls.png" alt="Animation Controls" height="500">
+<figcaption>
+The <em>Animation Controls</em> window.
+</figcaption>
+</figure>
+<p>
+This window lets you pick which animation you
+want to work on, and
+then tune its parameters to your liking.
+</p>
+
+<ul>
+<li><b>Animation Choice</b>:
+A drop-down list where you choose which animation you
+want to work with. 
+Click on the dark blue bar at the right side
+of the box to open the drop-down.
+</li>
+<li><b>Animation Parameters</b>:
+Each animation will give you its own custom set of sliders
+to control what gets drawn.
+If the slider is blue, then you can move it around in 
+real time as the animation runs.
+If the slider is red, that means changing it requires the
+animation to do some computation. 
+Moving a red slider will stop the animation.
+You can then move all the sliders around all you like.
+When you're ready to see the result,
+press the <em>Run Animation</em> button (discussed
+below in the <em>Camera Controls</em> window).
+</li>
+</ul>
+
+<h1>Camera Controls</h1>
+
+<figure>
+<img src="images/CameraControls.png" alt="Camera Controls" height="500">
+<figcaption>
+The <em>Camera Controls</em> window.
+</figcaption>
+</figure>
+
+<p>
+This window lets you control the size and length
+of your animation, and include motion blur if you like.
+You can preview the animation, or save it as an
+animated gif or a folder full of individual png files,
+one per frame.
+</p>
+
+<ul>
+<li><b>PNG File Directory</b>:
+If you choose to save your frames one by as in png format,
+this is the directory name that will be used to save them.
+This is located inside the <em>ProjectT2Z</em> folder.
+</li>
+<li><b>Image Controls</b>:
+<ul>
+<li><b>Number of Frames</b>: Length of your animation loop in frames.</li>
+<li><b>Frame Size</b>: Size of the square holding your animation, in pixels.
+The preview window is 500 by 500. If you choose a smaller size, your graphics
+will appear in the upper-left of that window. They will always be saved at
+the size you specify here.</li>
+<li><b>Snapshots per frame</b>: 
+If your animation moves fast and things are jumping around quickly,
+you can build your frames with motion blur. This will take longer,
+but the animation will look better, and your 3D model will usually
+look a bit better, too.
+Moving this slider to the right tells the system how many subframes
+to generate and average together to simulate motion blur. Try using
+a small value at first, and increase it as needed until things look good.
+The default value is 1, which means no motion blur.
+</li>
+</ul>
+</li>
+<li><b>Run Animation</b> Button: Start the animation in the 
+<em>Sketch Window</em>. If you have any blue sliders in the 
+<em>Animation Controls</em> window, you can move them around
+as the animation runs. 
+Red sliders will stop the animation.
+Press the <b>Run Animation</b> button to restart the animation
+using the current values of the sliders.
+When the animation is running, this button will change name
+to <b>Stop Animation</b>. Press that to stop the animation.
+</li>
+<li><b>Saving box</b>:
+<ul>
+<li><b>Build gif Animation</b>:
+Check this box to save your animation as an animated gif file.
+The file will show up in the <em>ProjectT2Z</em> folder.
+You need to press the <b>Record Animation</b> button to 
+save the animated gif file.
+</li>
+<li><b>Save PNG Frames</b>:
+Like the checkbox above, but the system will save each 
+frame of your animation as its own .png file when you 
+press the <b>Record Animation</b> button. The frames are
+automatically numbered. They are placed in a folder
+in the <em>ProjectT2Z</em> folder. The name of this new
+folder is given in the text box in the <em>PNG File Directory</em>
+region at the top of this window.
+</li>
+<li><b>Record Animation</b>: 
+If either of the above checkboxes is turned on,
+the system will run through your animation loop once,
+creating the file (or files) you've asked for.
+It will automatically stop after running through
+one cycle of the animation.
+</li>
+</ul>
+</li>
+</ul>
+
+<h1>Sculpture Controls</h1>
+
+<figure>
+<img src="images/SculptureControls.png" alt="Sculpture Controls" height="500">
+<figcaption>
+The <em>Sculpture Controls</em> window.
+</figcaption>
+</figure>
+
+<p>
+This window is all about how you make your 3D model
+from the 2D animation.
+The basic idea is that we stack up your frames one on top of the other.
+We then remove all pixels that have the background color,
+and they turn into empty air.
+Every pixel that's not the background will turn into real
+physical stuff by the 3D printer.
+</p>
+
+
+<li><b>STL File name</b>:
+The standard file format for 3D printers is .stl.
+Here you can give the file name that we save for
+your 3D model, if you don't like the awesome default.
+</li>
+<li><b>Structure</b>:
+These two sliders let you specify how your frames
+get stacked up to make the sculpture.
+<ul>
+<li><b>Offset</b>:
+Your animation is a loop. The model defaults to starting
+with frame 0 at the bottom, and following frames are stacked
+on top of it.
+But you can start anywhere in the loop by moving this
+slider to a percentage between 0 and 1.
+</li>
+<li><b>Number of Cycles</b>:
+You can repeat the animation more than once if you want.
+</li>
+</ul>
+
+</li>
+<li><b>The Block</b>:
+A lot of animations turn into models with pieces that aren't
+all connected to one another. If that model was printed,
+the individual pieces would just fall apart (picture a bunch
+of parallel tubes).
+To fix this problem, you can create a <em>block</em> that
+runs the full size of the printing area. You can control
+the thickness of the block and where it appears.
+Place it at the bottom of your model, and it's a base.
+Put it at the top, and it's a table top.
+Put it in the middle, and it just looks cool.
+<ul>
+<li><b>Include the Block</b>:
+Check this box to include the block in your file.
+It enables the two controls below.
+</li>
+<li><b>Block Start</b>:
+Where the block should appear.
+Think of your animation stack running from 0 at the
+bottom to 1 at the top.
+Move the slider to where you want the block to appear.
+</li>
+<li><b>Block Height (cm)</b>:
+The height of the block in centimeters.
+</li>
+</ul>
+</li>
+
+<li><b>Cost Estimate</b>:
+This is a <em>rough estimate</em> of how much it'll cost
+to print this at <a href="http://www.shapeways.com" target="_blank">Shapeways</a>
+out of their &quot;white strong &amp; flexible&quot; material
+(of course, you can choose a different material when
+you build it, or you can choose a completely
+different 3D printing service).
+You have to build the sculpture using the
+<em>Build Sculpture</em> button to get this estimate.
+Making changes to your animation or sculpture will
+clear the estimate;
+build the sculpture again to get a new estimate.
+</li>
+<li><b>Triangle Count</b>:
+How many triangles are in your model.
+Like the cost estimate above,
+you have to build the sculpture first to
+get this count,
+and when you move sliders,
+the count will go away.
+Note that you can alter the model (including
+removing triangles) in many 3D modeling programs,
+including MeshLab,
+which you installed above. More on this later.
+</li>
+<li><b>Build Speedup</b>:
+Very big, complicated models can take a while to 
+build. If you only want a quick, rough preview,
+you can crank up the <b>Speedup</b> slider.
+Things will go faster, but your model will be rougher.
+Be sure to send this back down to 1 before saving
+your final model!
+</li>
+<li><b>Size</b>:
+Big models look great, but they cost more than
+smaller models. Sometimes it's worth printing a
+model out at small size so you can look it over
+before spending the money for a big model.
+<ul>
+<li><b>Height (cm)</b>:
+How tall the model should be, in centimeters.
+</li>
+<li><b>Cross Section Scale</b>:
+Set the size of the 
+model's width and depth.
+This is like changing the image
+size, but applies only to the 3D model.
+</li>
+</ul>
+</li>
+<li><b>Build Sculpture</b> button:
+This will run through your animation and produce
+a file in .stl format for 3D printing. It will
+automatically stop after one cycle.
+When the model is built, the cost estimate
+and triangle counts above will be filled in.
+You can also open the model in 
+MeshLab
+and check it out!
+Hint: if you use the same name every time,
+you can just hit the refresh button in MeshLab
+to re-load your model. 
+On some platforms (like Windows)
+MeshLab has a bug, 
+requiring you to jiggle the view a bit with the
+mouse to get it to refresh.
+</li>
+<li><b>Exit</b> button:
+Press this to bring up a dialog box 
+confirming that you want to exit.
+</li>
+</ul>
+
+<h1>Sketch Window</h1>
+
+<figure>
+<img src="images/SketchWindow.png" alt="Sketch Window" height="500">
+<figcaption>
+The <em>Sketch Window</em>.
+</figcaption>
+</figure>
+
+<p>
+Your animation plays here. There is no user interaction 
+in this window.
+</p>
+
+<h1>FAQ</h1>
+<h3>Why isn't this browser-based?</h3>
+<p>
+In a word, <em>files</em>. 
+We save a lot of files (your gif animation,
+the png frames, and the stl sculpture file).
+For very good security reasons, code running in your browser
+cannot easily save files onto your computer's hard drive.
+We'd love to run this in a browser,
+but saving the output files is more important.
+</p>
+<h3>My gif files don't look right. What can I do?</h3>
+<p>
+Making animated gif files is surprisingly hard, because
+the gif format only allows 256 colors per image.
+Each program that turns frames into an animated gif
+(called an encoder),
+somehow has to choose those colors, and decide if it
+wants to save space by 
+sometimes re-using the same colors 
+for multiple frames.
+Each encoder seems to do things its own way,
+and they all have some conditions under which the
+results come out lousy.
+</p>
+<p>
+We're using a good encoder, 
+but if your animation is in its weak zone,
+you can try another encoder.
+Just save your frames in png format,
+and use another gif encoder to mash them together
+(<a href="http://www.lcdf.org/gifsicle/" target="_blank">gifsicle</a>
+is a popular choice that runs on most operating systems).
+Note that for some encoders,
+you might have to turn your png files into
+gif files first.
+</p>
+<h3>So why not save these as gif rather than png?</h3>
+<p>
+Each individual gif image is limited to 256 colors,
+whether it's in an animation or not.
+So if we saved the frames in gif format,
+we'd have to throw away all but 256 colors.
+For complex pictures that can look pretty bad.
+</p>
+<p>
+So we save your images in the lossless png format,
+so they're perfect and uncompromised.
+If you later want to turn them into something
+like gif or jpg, there are tons of free
+programs all over the web that can 
+do that for you (just search for
+<em>file format converter</em> and pick
+one that looks good to you).
+</p>
+<h3>How do I make my own animations?</h3>
+<p>
+Open the <em>Animations.pde</em> tab and read the
+comments at the top.
+Then write your new animation and add it to the
+drop-down list. That's it!
+You'll need to know some Processing.
+</p>
+<h3>How can I learn Processing?</h3>
+<p>
+There are lots of ways to learn Processing!
+There are some tutorials on
+Processing's own <a href="https://processing.org/tutorials/" target="_blank">tutorials page</a>,
+and there are tons of videos and web pages
+all over the web.
+In particular,
+we like the videos from 
+<a href="http://icm.shiffman.net/" target="_blank">Daniel Shiffman</a>,
+and of course we recommend Andrew's 
+<a href="http://www.imaginary-institute.com" target="_blank">online
+Processing course</a>.
+</p>
+</ul>
+
+
+<p style="margin-bottom:100px;">
+</p>
+</div>
+</body>
+</html>
+

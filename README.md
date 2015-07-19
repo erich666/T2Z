@@ -5,4 +5,4 @@ T2Z
 
 T2Z is one key program in a larger effort called "323," which explores converting from various dimensional representations to others.
 
-[Documentation](./docs/) â€” [Gallery](http://bit.ly/323spot)
+[Documentation](./docs/) — [Gallery](http://bit.ly/323spot)
