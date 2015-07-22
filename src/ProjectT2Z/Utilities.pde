@@ -28,7 +28,7 @@ all here together.
 
 // cost of sculpture as a String
 String getCostEstimate( float cubicCentimetersMaterial, float cubicCentimetersMachine, float voxelCCM ) {
-  // where the crazy formula comes from:
+  // where the crazy formula comes from, with our own approximations thrown in:
   // https://www.shapeways.com/blog/archives/18174-how-much-does-it-cost-when-you-3d-print-a-thousand-different-parts-all-at-once.html
   float cost = 1.50 + // handling costubicCentimetersMhine;
                0.28 * cubicCentimetersMaterial * voxelCCM +
@@ -370,7 +370,7 @@ void setupAnimationGlobals() {
     GifExporter = new GifMaker(this, gifName, GifCompressionQuality);  
     GifExporter.setRepeat(0); // animation loops forever
     GifExporter.setDelay(16); // 16 ms delay produces about 60 frames/sec. Weirdly, 0 ms makes huge delays.
-  } 
+  }
 }
 
 String getNoBlanksTimeStampAnimationName() {

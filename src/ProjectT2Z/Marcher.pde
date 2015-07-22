@@ -24,6 +24,7 @@ class Marcher {
   // class variables for the marcher can go here
   STLWriter SW;
   float heightScale, crossSectionScale;
+  color facetColor = color(255,255,255);
   PVector scaleFactor;
   
   float Isolevel = 0.5;
@@ -394,6 +395,11 @@ class Marcher {
   0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   
+  // Note that currently there is just the single facet color for each layer.
+  // We could actually give a facet color per triangle output, but we don't pass in the
+  // original images for output, just the grayscale surface versions. By passing in
+  // the colored images, we could also then get the non-background average pixel color
+  // and use that. TODO
   Marcher(STLWriter _stlWriter, float _heightScale, float _crossSectionScale) {
     SW = _stlWriter;
     heightScale = _heightScale;
@@ -430,6 +436,13 @@ class Marcher {
     // perform any desired cleanup
   }
   
+  // set color
+  // Not actually called in the rest of the code, so the color is always white. TODO
+  void setColor( color _facetColor )
+  {
+    facetColor = _facetColor;
+  }
+  
   /* The main entry point.
   We're given two AUFields. They normally have only two values: 0 and 1.
   0 means the corresponding "pixel" is inside, 1 means it's outside.
@@ -449,6 +462,12 @@ class Marcher {
   void march(AUField lowerField, AUField upperField, float thickness) {
     // do marching cubes.
     PVector offset = new PVector();
+    
+    // Set fill color - grabbed from the global fill color; if the fill color
+    // changes per object, tough luck. We update the color only once per layer.
+    // See http://stackoverflow.com/questions/15432404/current-fill-color-in-processing
+    // for g.fillColor.
+    setColor( g.fillColor );
     
     // for testing, put these in separate variables
     int lowerx, upperx, lowery, uppery;
@@ -556,7 +575,7 @@ class Marcher {
             int index2 = TriTable[cubeIndex + i + 1];
             int index3 = TriTable[cubeIndex + i + 2];
 
-            saveTriangle( offset, EdgePoint[index1], EdgePoint[index2], EdgePoint[index3] );
+            saveTriangle( offset, EdgePoint[index1], EdgePoint[index2], EdgePoint[index3], facetColor );
             // next triangle, or end of list
             i += 3;
           }
@@ -581,7 +600,7 @@ class Marcher {
     return VoxelsOfMachine;
   }
   
-  void saveTriangle(PVector offset, PVector v1, PVector v2, PVector v3) {
+  void saveTriangle(PVector offset, PVector v1, PVector v2, PVector v3, color facetColor) {
     // remove any degenerate triangles, where two points match
     if ( ((v1.x == v2.x) && (v1.y == v2.y) && (v1.z == v2.z)) ||
          ((v1.x == v3.x) && (v1.y == v3.y) && (v1.z == v3.z)) ||
@@ -605,7 +624,8 @@ class Marcher {
 
     NumTriangles++;
     
-    SW.writeFacet(normal, ov1, ov3, ov2);
+    //SW.writeFacet(normal, ov1, ov3, ov2);
+    SW.writeColoredFacet(normal, ov1, ov3, ov2, facetColor);
   }
   
   String triangleString()

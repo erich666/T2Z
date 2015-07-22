@@ -354,10 +354,10 @@ void buildAnimatorList() {
   
   //AnimatorList.add(new DoubleChainSpin());
   AnimatorList.add(new HackMe());
-  //AnimatorList.add(new Sphereflake());
+  AnimatorList.add(new Sphereflake());
   
   AnimatorList.add(new Merge());
-  //AnimatorList.add(new Shift());
+  AnimatorList.add(new Shift());
   //AnimatorList.add(new Vase());
   AnimatorList.add(new Dissection01());
   //AnimatorList.add(new Dissection02());
@@ -367,7 +367,7 @@ void buildAnimatorList() {
   //AnimatorList.add(new WindSpinner());
   
   AnimatorList.add(new Ag0011());
-  AnimatorList.add(new Ag0012());
+  //AnimatorList.add(new Ag0012());
   //AnimatorList.add(new Ag0020());
   AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
@@ -1136,6 +1136,7 @@ class Sphereflake extends Animator {
     // Note that you can also draw with this color to "carve" out elements from an animation.
     background(BackgroundColor);
     fill(59,92,136);
+
     for (Sphere Sphere: sphereList) {
       Sphere.render(time);
     }
@@ -3184,6 +3185,8 @@ class Element11 {
 
 
 // ================= Ag0012
+// TODO: should delete or fix. This one does NOT scale properly when the Frame Size is reduced.
+// Note also that this one appears to get "crashy" when the Speedup value is set > 1.
 
 class Ag0012 extends Animator {
   int NumElement12s = 36;
@@ -3264,8 +3267,8 @@ class Element12 {
     fill(fclr);
     stroke(sclr);
     pushMatrix();
-      translate(0, -.2*height);
       translate(cx, cy);
+      translate(0, -.2*height);
       scale(.75);
       rotate(angle);
       //ellipse(0, 0, 2*rx, 2*ry);
