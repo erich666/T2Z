@@ -9,4 +9,4 @@ T2Z is one key program in a larger effort called "323," which explores convertin
 
 [Documentation](http://htmlpreview.github.io/?https://github.com/erich666/T2Z/blob/master/docs/ProjectT2Z.html) — [Gallery](http://bit.ly/323spot) — [Shapeways](https://www.shapeways.com/designer/323spot)
 
-![July22b2014 animation](http://erich.realtimerendering.com/323/media/July22b2014.gif) ![July22b2014 3D print](http://erich.realtimerendering.com/323/media/July22b2014_3D_print.gif) ![Screenshot](http://erich.realtimerendering.com/323/media/screenshotReduced.png)
+![July22b2014 animation](http://erich.realtimerendering.com/323/media/July22b2014.gif) ![July22b2014 3D print](http://erich.realtimerendering.com/323/media/July22b2014_3D_print.gif) ![Screenshot](http://erich.realtimerendering.com/323/media/screenshotReduced.png http://erich.realtimerendering.com/323/media/screenshot.png)
