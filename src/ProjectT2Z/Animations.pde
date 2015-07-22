@@ -70,7 +70,7 @@ How to create an animation:
  instance variable. It doesn't go the other way. If you change the value of the instance 
  variable in your code, the slider will not update to that new value. Such a mismatch can 
  make debugging a nightmare. So I strongly recommend that you never assign a new value to 
- any instance variable that has a cooresponding slider.
+ any instance variable that has a corresponding slider.
  
  Here's a complete, simple animation. It draws a square that makes one full orbit around
  the center over the course of the animation loop. It offers two sliders on the user
@@ -190,7 +190,7 @@ How to create an animation:
  that should appear next to your slider. I strongly suggest that you use one of 
  the strings you created earlier (as I did in lines 7-8). The come three floats: 
  the minimum value for the slider, the maximum value, and the starting value. 
- Notice that I'ved used one of my instance variables for this starting value, 
+ Notice that I've used one of my instance variables for this starting value, 
  since they were created with starting values on lines 3-5. Then comes a boolean: 
  if this slider should be limited to integer values (e.g., 3, 4, 5) then set this 
  to true. If you'd like floating-point values (e.g., 3.5, 17.25) then set this 
@@ -276,7 +276,7 @@ How to create an animation:
  For example, suppose you were making a five-frame animation. Then render() would
  be called five times, with values of time at 0, .2, .4, .6, and .8. When 
  your frame is drawn, you don't have to do anything - the system will take whatever
- is on-screen and use it as the contents of that frame. Similiarly, you don't have
+ is on-screen and use it as the contents of that frame. Similarly, you don't have
  to do anything special on your last frame. Just use the value of time to draw
  the picture corresponding to that moment, and that's it. If you're used to
  frameCount, you'll find that using time can be just as easy or even easier

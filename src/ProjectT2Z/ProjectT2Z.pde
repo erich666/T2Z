@@ -148,7 +148,7 @@ int DrawMode = DRAW_MODE_NONE;      // the current state of what draw() is doing
 boolean NeedToRebuildGlobals = true;        // true when a control changes
 final int COLOR_SCHEME_BLACK_ON_WHITE = 8;  // the row in user_gui_palette.png for black on white text 
 final int COLOR_SCHEME_BLACK_ON_GRAY = 9;   // the row in user_gui_palette.png for black on gray text 
-int FadeOutAlpha = 100;  // the opacity of the controls when they're temporarilhy unavailable (out of 255)
+int FadeOutAlpha = 100;  // the opacity of the controls when they're temporarily unavailable (out of 255)
 int FadeDuration = 400;  // milliseconds to fade in or out when the controls change 
 
 /*********** END OF GLOBALS SECTION *****************/

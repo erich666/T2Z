@@ -649,7 +649,7 @@ class Animator {
 /*
 A liberal adaptation of the AUStepper object, reshaped for a new set of inputs & outputs.
 getStepNum() does a simple linear search from the start of the list. Of course we could
-make this a nice, molstly balanced binary tree for O(log n) searching, but the lists are 
+make this a nice, mostly-balanced binary tree for O(log n) searching, but the lists are 
 usually so short (like 2 to 5 entries) that it doesn't seem worth the effort to allocate
 memory for the nodes, link them up, etc. Maybe someday if this becomes a bottleneck that
 optimization can be done.

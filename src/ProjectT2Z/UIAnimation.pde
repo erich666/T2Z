@@ -167,7 +167,7 @@ void turnAnimationGroupsOff() {
 
 /*
 Handler for when the drop-down list gets changed. Normally this won't be called unless the new
-selection is different from the existing one. Becuase the G4P library for UI elements routes all
+selection is different from the existing one. Because the G4P library for UI elements routes all
 drop-down list events to a single handler, we put that handler in the UIShared tab, and it
 calls this routine if the drop-down was the animation chooser.
 */
@@ -209,7 +209,7 @@ public void initAnimationUI() {
   AnimatorList = new ArrayList<Animator>();
   buildAnimatorList();
 
-  // the panel holding the title for the drop-down list, and the drop-down itself. The panel is
+  // The panel holding the title for the drop-down list, and the drop-down itself. The panel is
   // enclosed in a colored rectangle.
   float paneULx = 20;
   float paneULy = 20;
