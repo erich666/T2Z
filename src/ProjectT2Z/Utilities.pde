@@ -560,7 +560,8 @@ class MyCamera {
       for (int x=0; x<Awidth; x++) {
         color c = pixels[(y*width)+x];
         // Very occasionally, red() green() and blue() don't do the right thing here. I don't know why.
-        // But if I do my own extraction, all is well. Colors are in the format 0xAARRGGBB
+        // It seems to have something to do with the colorMode setting, which seems very weird. So I just
+        // unpack the colors myself. Colors are stored in the format 0xAARRGGBB
         int cR = 0xFF & ((c & 0x00FF0000) >> 16);
         int cG = 0xFF & ((c & 0x0000FF00) >> 8);
         int cB = 0xFF & ((c & 0x000000FF));
