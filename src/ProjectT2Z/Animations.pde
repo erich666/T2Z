@@ -3748,13 +3748,12 @@ sculpture may appear to be missing some off the top.
 class HeightField extends Animator {
 
   ArrayList<String> fileNames;
-  String folderPath;
   AUField heightField;
   PImage outputImg;
 
    HeightField() {
       super("Height Field");
-      folderPath = SketchPath+"heightFields/heights001.png";
+      String folderPath = SketchPath+"heightFields/heights001.png";
       File f = new File(folderPath);
       assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
       PImage inputImg = loadImage(folderPath);
