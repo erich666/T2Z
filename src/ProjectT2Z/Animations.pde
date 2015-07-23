@@ -371,6 +371,7 @@ void buildAnimatorList() {
   //AnimatorList.add(new Ag0020());
   AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
+  AnimatorList.add(new Jephthai());
 
   
   // "Animators" that instead read an animated GIF or set of PNG frames
@@ -3565,6 +3566,71 @@ class Ag0035 extends Animator {
       rotate(angle+PI);
       arc(0, 0, 2+(2*bigR), 2+(2*bigR), PI-(gap/2.), PI+(gap/2.));
      popMatrix();
+  }
+}
+
+// ================= Jephthai
+
+class Jephthai extends Animator {
+  int Duration = 800;
+  float Scale = 1.0;
+  float Retention = 0.2;
+
+  String DurationLabel = "Duration";
+  String ScaleLabel = "Scale";
+  String RetentionLabel = "Retention";
+
+  // From https://www.reddit.com/r/processing/comments/3dt69p/i_love_simple_code_that_makes_complicated_shapes/
+  Jephthai() {
+    super("Jephthai's Blob");
+    // arguments: sliders, String label, minimum, maximum, variable to change, integer?
+    addSlider(sliders, DurationLabel, 1, 2000, Duration, true);  // "true" - it's an integer
+    addSlider(sliders, ScaleLabel, 0.2, 3.0, Scale, false);  // "false" - it's a float
+    addSlider(sliders, RetentionLabel, 0.0, 1.0, Retention, false);  // "false" - it's a float
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    // for each slider above, add a line here with the label, variable name, and integer/float value.
+    if (sliderName == DurationLabel) Duration = iValue;
+    if (sliderName == ScaleLabel) Scale = fValue;
+    if (sliderName == RetentionLabel) Retention = fValue;
+  }
+
+  void restart() {
+    // the background color: 0-255 for red, green, and blue 
+    BackgroundColor = color(0); 
+  }
+
+  // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
+  void render(float time) {
+    // Set the background color. For sculpture output this identifies the "outside" color.
+    // Note that you can also draw with this color to "carve" out elements from an animation.
+    background(BackgroundColor);
+    colorMode( HSB, 360, 100, 100, 100 );
+    // stroke doesn't 3D print well
+    //stroke(0);
+    noStroke();
+
+    translate(Awidth/2., Aheight/2.);
+    scale( Scale, Scale );
+    
+    float count = time * Duration;
+    int startTime = (int)(count - Duration * Retention);
+    if ( startTime < 0 )
+      startTime = 0;
+    for ( int newTime = startTime; newTime < count; newTime++ )
+    {
+      pushMatrix();
+      rotate(newTime / 60.0);
+      translate( 150, 0);
+      rotate(newTime / 20.0);
+      scale( sin(newTime / 50.0) + 0.2, cos(newTime / 50.0) + 0.2);
+      float factor = sin(newTime / 1000.0);
+      scale( factor, factor);
+      fill((newTime * 1.6 % 360), 50, 100, 20);
+      ellipse(0, 0, 300, 300);
+      popMatrix();
+    }
   }
 }
 

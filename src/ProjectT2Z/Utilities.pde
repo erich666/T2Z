@@ -551,6 +551,7 @@ class MyCamera {
       film.flatten(0);
       grayFilm.flatten(0);
     }
+    colorMode(RGB, 255, 255, 255, 255);
     int bgR = int(red(BackgroundColor));
     int bgG = int(green(BackgroundColor));
     int bgB = int(blue(BackgroundColor));
@@ -559,12 +560,9 @@ class MyCamera {
     for (int y=0; y<Aheight; y++) {
       for (int x=0; x<Awidth; x++) {
         color c = pixels[(y*width)+x];
-        // Very occasionally, red() green() and blue() don't do the right thing here. I don't know why.
-        // It seems to have something to do with the colorMode setting, which seems very weird. So I just
-        // unpack the colors myself. Colors are stored in the format 0xAARRGGBB
-        int cR = 0xFF & ((c & 0x00FF0000) >> 16);
-        int cG = 0xFF & ((c & 0x0000FF00) >> 8);
-        int cB = 0xFF & ((c & 0x000000FF));
+        int cR = int(red(c));
+        int cG = int(green(c));
+        int cB = int(blue(c));
         film.fields[0].z[y][x] += cR;
         film.fields[1].z[y][x] += cG;
         film.fields[2].z[y][x] += cB;
