@@ -339,7 +339,7 @@ void buildAnimatorList() {
   */
 
   // basic examples
-  
+    
   //AnimatorList.add(new OneRotatingSquare());
   //AnimatorList.add(new RotatingSquares());
   //AnimatorList.add(new LissajousBall());
@@ -353,23 +353,23 @@ void buildAnimatorList() {
   // to get into the code and start mucking about!
   
   //AnimatorList.add(new DoubleChainSpin());
-  AnimatorList.add(new HackMe());
-  AnimatorList.add(new Sphereflake());
+  //AnimatorList.add(new HackMe());
+  //AnimatorList.add(new Sphereflake());
   
-  AnimatorList.add(new Merge());
-  AnimatorList.add(new Shift());
+  //AnimatorList.add(new Merge());
+  //AnimatorList.add(new Shift());
   //AnimatorList.add(new Vase());
-  AnimatorList.add(new Dissection01());
+  //AnimatorList.add(new Dissection01());
   //AnimatorList.add(new Dissection02());
-  AnimatorList.add(new Dissection03());
+  //AnimatorList.add(new Dissection03());
   //AnimatorList.add(new Dissection04());
-  AnimatorList.add(new Wobbly());
+  //AnimatorList.add(new Wobbly());
   //AnimatorList.add(new WindSpinner());
   
-  AnimatorList.add(new Ag0011());
+  //AnimatorList.add(new Ag0011());
   //AnimatorList.add(new Ag0012());
   //AnimatorList.add(new Ag0020());
-  AnimatorList.add(new Ag0033());
+  //AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
   
   // "Animators" that instead read an animated GIF or set of PNG frames
@@ -378,6 +378,8 @@ void buildAnimatorList() {
   // interprete all compression types for animation, so you can get bad frames.
   // AnimatorList.add(new AnimatedGifReader());
   // AnimatorList.add(new FolderOfFramesReader());
+  AnimatorList.add(new HeightField());
+
 }
 
 // ================= One Rotating Square
@@ -3677,7 +3679,7 @@ class FolderOfFramesReader extends Animator {
   
    FolderOfFramesReader() {
       super("Folder Of Frames Reader"); 
-      folderPath = SketchPath+"inputFrames/ag0085-pngFrames-CRASH";
+      folderPath = SketchPath+"inputFrames/ag0085-pngFrames";
       File f = new File(folderPath);
       assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
       fileNames = new ArrayList<String>(Arrays.asList(f.list()));
@@ -3730,4 +3732,80 @@ class FolderOfFramesReader extends Animator {
   }
 }
 
+// ================= HeightField
+
+/*
+Warning!
+This animation is a total hack, and should not be used as a basis for anything else! 
+We read in just one image at the given path, and build a height field from that. 
+It's your responsibility to set the number of frames to 256 (or more), or your 
+sculpture may appear to be missing some off the top.
+*/
+
+class HeightField extends Animator {
+
+  ArrayList<String> fileNames;
+  String folderPath; 
+  PImage inputImg, threshImg;
+  
+   HeightField() {
+      super("Height Field"); 
+      folderPath = SketchPath+"heightFields/heights001.png";
+      File f = new File(folderPath);
+      assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
+      inputImg = loadImage(folderPath);
+      inputImg.loadPixels(); 
+      for (int y=0; y<inputImg.height; y++) {
+        for (int x=0; x<inputImg.width; x++) {
+          int index = (y*inputImg.width)+x;
+          //println("x="+x+" y="+y+" index="+index);
+          float rval = red(inputImg.pixels[index]);
+          float gval = green(inputImg.pixels[index]);
+          float bval = blue(inputImg.pixels[index]);
+          float grayval = (0.2126 * rval) + (0.7152 * gval) + (0.0722 * bval);
+          inputImg.pixels[index] = color(int(grayval));
+        }
+      }
+      inputImg.updatePixels();
+      threshImg = createImage(inputImg.width, inputImg.height, RGB);
+      BackgroundColor = color(0);
+   }
+
+   void sliderChanged(String sliderName, int iValue, float fValue) {
+     // no sliders
+   }
+   
+   void rebuild() {         
+   }
+
+   void restart() {
+      BackgroundColor = color(0);
+         if (256 > AnumFrames) {
+        String warning = "Your Number of Frame slider is set to "+AnumFrames+", but it should be 256 or more. See message on console for details.";
+        reportWarning("HeightField restart", warning);
+        println("  Your Number of Frame slider is set to "+AnumFrames+".");
+        println("  You should move this slider to 256 (larger than that is okay, too)");
+      }         
+   }
+
+   void render(float time) {
+    threshImg.loadPixels();
+    inputImg.loadPixels();
+    background(BackgroundColor);
+    int tval = AframeCount;
+      for (int y=0; y<threshImg.height; y++) {
+        for (int x=0; x<threshImg.width; x++) {
+          int index = (y*threshImg.width)+x;
+          float rval = red(inputImg.pixels[index]);
+          if (rval > tval) {
+            threshImg.pixels[index] = color(255);
+          } else {
+            threshImg.pixels[index] = BackgroundColor;
+          }
+        }
+      }
+      threshImg.updatePixels();
+      image(threshImg, 0, 0);
+  }
+}
 
