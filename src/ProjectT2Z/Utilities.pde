@@ -408,7 +408,9 @@ void restartAnimation() {
 
 void renderAnimation(float time) {
   Animator anim  = AnimatorList.get(ChosenAnimationUINumber);
+  pushStyle();
   anim.render(time);
+  popStyle();
 }
 
 /******************************
