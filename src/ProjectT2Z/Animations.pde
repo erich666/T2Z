@@ -3748,38 +3748,27 @@ sculpture may appear to be missing some off the top.
 class HeightField extends Animator {
 
   ArrayList<String> fileNames;
-  String folderPath; 
-  PImage inputImg, threshImg;
-  
+  String folderPath;
+  AUField heightField;
+  PImage outputImg;
+
    HeightField() {
       super("Height Field");
-      // put your height field image here.
-      folderPath = SketchPath+"heightFields/Skull3dRelief.png";
+      folderPath = SketchPath+"heightFields/heights001.png";
       File f = new File(folderPath);
       assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
-      inputImg = loadImage(folderPath);
-      inputImg.loadPixels(); 
-      for (int y=0; y<inputImg.height; y++) {
-        for (int x=0; x<inputImg.width; x++) {
-          int index = (y*inputImg.width)+x;
-          //println("x="+x+" y="+y+" index="+index);
-          float rval = red(inputImg.pixels[index]);
-          float gval = green(inputImg.pixels[index]);
-          float bval = blue(inputImg.pixels[index]);
-          float grayval = (0.2126 * rval) + (0.7152 * gval) + (0.0722 * bval);
-          inputImg.pixels[index] = color(int(grayval));
-        }
-      }
-      inputImg.updatePixels();
-      threshImg = createImage(inputImg.width, inputImg.height, RGB);
+      PImage inputImg = loadImage(folderPath);
+      heightField = new AUField(ThisApplet, inputImg.width, inputImg.height);
+      heightField.fromPixels(AUField.FIELD_LUM, inputImg);
+      outputImg = createImage(heightField.w, heightField.h, RGB);
       BackgroundColor = color(0);
    }
 
    void sliderChanged(String sliderName, int iValue, float fValue) {
      // no sliders
    }
-   
-   void rebuild() {         
+
+   void rebuild() {
    }
 
    void restart() {
@@ -3789,27 +3778,25 @@ class HeightField extends Animator {
         reportWarning("HeightField restart", warning);
         println("  Your Number of Frame slider is set to "+AnumFrames+".");
         println("  You should move this slider to 256 (larger than that is okay, too)");
-      }         
+      }
    }
 
    void render(float time) {
-    threshImg.loadPixels();
-    inputImg.loadPixels();
+    outputImg.loadPixels();
     background(BackgroundColor);
     int tval = AframeCount;
-      for (int y=0; y<threshImg.height; y++) {
-        for (int x=0; x<threshImg.width; x++) {
-          int index = (y*threshImg.width)+x;
-          float rval = red(inputImg.pixels[index]);
-          if (rval > tval) {
-            threshImg.pixels[index] = color(255);
+      for (int y=0; y<heightField.h; y++) {
+        for (int x=0; x<heightField.w; x++) {
+          int index = (y * outputImg.width) + x;
+          if (heightField.z[y][x] > tval) {
+            outputImg.pixels[index] = color(255);
           } else {
-            threshImg.pixels[index] = BackgroundColor;
+            outputImg.pixels[index] = BackgroundColor;
           }
         }
       }
-      threshImg.updatePixels();
-      image(threshImg, 0, 0);
+      outputImg.updatePixels();
+      image(outputImg, 0, 0);
   }
 }
 
