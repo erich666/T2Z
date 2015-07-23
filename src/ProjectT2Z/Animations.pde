@@ -353,24 +353,25 @@ void buildAnimatorList() {
   // to get into the code and start mucking about!
   
   //AnimatorList.add(new DoubleChainSpin());
-  //AnimatorList.add(new HackMe());
-  //AnimatorList.add(new Sphereflake());
+  AnimatorList.add(new HackMe());
+  AnimatorList.add(new Sphereflake());
   
-  //AnimatorList.add(new Merge());
-  //AnimatorList.add(new Shift());
+  AnimatorList.add(new Merge());
+  AnimatorList.add(new Shift());
   //AnimatorList.add(new Vase());
-  //AnimatorList.add(new Dissection01());
+  AnimatorList.add(new Dissection01());
   //AnimatorList.add(new Dissection02());
-  //AnimatorList.add(new Dissection03());
+  AnimatorList.add(new Dissection03());
   //AnimatorList.add(new Dissection04());
-  //AnimatorList.add(new Wobbly());
+  AnimatorList.add(new Wobbly());
   //AnimatorList.add(new WindSpinner());
   
-  //AnimatorList.add(new Ag0011());
+  AnimatorList.add(new Ag0011());
   //AnimatorList.add(new Ag0012());
   //AnimatorList.add(new Ag0020());
-  //AnimatorList.add(new Ag0033());
+  AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
+
   
   // "Animators" that instead read an animated GIF or set of PNG frames
   // for forming a sculpture.
@@ -378,7 +379,9 @@ void buildAnimatorList() {
   // interprete all compression types for animation, so you can get bad frames.
   // AnimatorList.add(new AnimatedGifReader());
   // AnimatorList.add(new FolderOfFramesReader());
-  AnimatorList.add(new HeightField());
+  
+  // This one reads a grayscale height field image and converts it to a 3D model.
+  // AnimatorList.add(new HeightField());
 
 }
 
@@ -3749,8 +3752,9 @@ class HeightField extends Animator {
   PImage inputImg, threshImg;
   
    HeightField() {
-      super("Height Field"); 
-      folderPath = SketchPath+"heightFields/heights001.png";
+      super("Height Field");
+      // put your height field image here.
+      folderPath = SketchPath+"heightFields/Skull3dRelief.png";
       File f = new File(folderPath);
       assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
       inputImg = loadImage(folderPath);
