@@ -59,7 +59,7 @@ We create the 3D sculptures by imagining the frames of
 your animation in one big stack.
 We carve away all the pixels that have the color
 of the background,
-and what's left becomes your model!
+and what's left becomes your model.
 </p>
 <p>
 When you're ready,
@@ -260,13 +260,13 @@ The <em>Camera Controls</em> window.
 This window lets you control the size and length
 of your animation, and include motion blur if you like.
 You can preview the animation, or save it as an
-animated gif or a folder full of individual png files,
+animated GIF or a folder full of individual PNG files,
 one per frame.
 </p>
 
 <ul>
 <li><b>PNG File Directory</b>:
-If you choose to save your frames one by as in png format,
+If you choose to save your frames one by as in PNG format,
 this is the directory name that will be used to save them.
 This is located inside the <em>ProjectT2Z</em> folder.
 </li>
@@ -301,11 +301,11 @@ to <b>Stop Animation</b>. Press that to stop the animation.
 </li>
 <li><b>Saving box</b>:
 <ul>
-<li><b>Build gif Animation</b>:
-Check this box to save your animation as an animated gif file.
+<li><b>Build GIF Animation</b>:
+Check this box to save your animation as an animated GIF file.
 The file will show up in the <em>ProjectT2Z</em> folder.
 You need to press the <b>Record Animation</b> button to 
-save the animated gif file.
+save the animated GIF file.
 </li>
 <li><b>Save PNG Frames</b>:
 Like the checkbox above, but the system will save each 
@@ -428,7 +428,7 @@ build. If you only want a quick, rough preview,
 you can crank up the <b>Speedup</b> slider.
 Things will go faster, but your model will be rougher.
 Be sure to send this back down to 1 before saving
-your final model!
+your final model.
 </li>
 <li><b>Size</b>:
 Big models look great, but they cost more than
@@ -441,9 +441,8 @@ How tall the model should be, in centimeters.
 </li>
 <li><b>Cross Section Scale</b>:
 Set the size of the 
-model's width and depth.
-This is like changing the image
-size, but applies only to the 3D model.
+model's width and depth relative to the height.
+Lower means a skinnier model, higher means squatter.
 </li>
 </ul>
 </li>
@@ -454,7 +453,7 @@ automatically stop after one cycle.
 When the model is built, the cost estimate
 and triangle counts above will be filled in.
 You can also open the model in 
-MeshLab
+<a href="http://meshlab.sourceforge.net/">MeshLab</a>
 and check it out!
 Hint: if you use the same name every time,
 you can just hit the refresh button in MeshLab
@@ -488,18 +487,18 @@ in this window.
 <h3>Why isn't this browser-based?</h3>
 <p>
 In a word, <em>files</em>. 
-We save a lot of files (your gif animation,
-the png frames, and the stl sculpture file).
+We save a lot of files (your GIF animation,
+the PNG frames, and the stl sculpture file).
 For very good security reasons, code running in your browser
 cannot easily save files onto your computer's hard drive.
 We'd love to run this in a browser,
 but saving the output files is more important.
 </p>
-<h3>My gif files don't look right. What can I do?</h3>
+<h3>My GIF files don't look right. What can I do?</h3>
 <p>
-Making animated gif files is surprisingly hard, because
-the gif format only allows 256 colors per image.
-Each program that turns frames into an animated gif
+Making animated GIF files is surprisingly hard, because
+the GIF format only allows 256 colors per image.
+Each program that turns frames into an animated GIF
 (called an encoder),
 somehow has to choose those colors, and decide if it
 wants to save space by 
@@ -513,27 +512,27 @@ results come out lousy.
 We're using a good encoder, 
 but if your animation is in its weak zone,
 you can try another encoder.
-Just save your frames in png format,
-and use another gif encoder to mash them together
+Just save your frames in PNG format,
+and use another GIF encoder to mash them together
 (<a href="http://www.lcdf.org/gifsicle/" target="_blank">gifsicle</a>
 is a popular choice that runs on most operating systems).
 Note that for some encoders,
-you might have to turn your png files into
-gif files first.
+you might have to turn your PNG files into
+GIF files first.
 </p>
-<h3>So why not save these as gif rather than png?</h3>
+<h3>So why not save these as GIF rather than PNG?</h3>
 <p>
-Each individual gif image is limited to 256 colors,
+Each individual GIF image is limited to 256 colors,
 whether it's in an animation or not.
-So if we saved the frames in gif format,
+So if we saved the frames in GIF format,
 we'd have to throw away all but 256 colors.
 For complex pictures that can look pretty bad.
 </p>
 <p>
-So we save your images in the lossless png format,
+So we save your images in the lossless PNG format,
 so they're perfect and uncompromised.
 If you later want to turn them into something
-like gif or jpg, there are tons of free
+like GIF or JPG, there are tons of free
 programs all over the web that can 
 do that for you (just search for
 <em>file format converter</em> and pick
@@ -549,7 +548,7 @@ You'll need to know some Processing.
 </p>
 <h3>How can I learn Processing?</h3>
 <p>
-There are lots of ways to learn Processing!
+There are lots of ways to learn Processing.
 There are some tutorials on
 Processing's own <a href="https://processing.org/tutorials/" target="_blank">tutorials page</a>,
 and there are tons of videos and web pages
@@ -560,6 +559,16 @@ we like the videos from
 and of course we recommend Andrew's 
 <a href="http://www.imaginary-institute.com" target="_blank">online
 Processing course</a>.
+</p>
+<h3>Any tips about making sculptures?</h3>
+<p>
+Normally you want to avoid rapidly moving small objects in your animation, as these will create very thin objects that are difficult to 3D print. You don't need a 3D printer to get models printed. There are a fair number of consumer-friendly service firms that will do so for you, such as <a href="http://shapeways.com">Shapeways</a>, <a href="http://sculpteo.com">Sculpteo</a>, <a href="https://www.3dhubs.com/">3D Hubs</a>, <a href="http://i.materialise.com/">i.materialise</a>, and <a href="https://www.ponoko.com/">Ponoko</a>. Shapeways has some <a href="https://www.shapeways.com/materials/strong-and-flexible-plastic?li=nav">good information</a> on design constraints for 3D printing.
+</p>
+<p>
+When you make a final export, crank up the number of frames, frame size, and snapshots per frame to their maximums. The build will go much slower, but the resulting mesh will be more detailed and smoother.
+</p>
+<p>
+At this high quality the STL model file produced is huge. To make your mesh small enough to upload successfully, we recommend <a href="http://meshlab.sourceforge.net/">MeshLab</a> for quick mesh simplification. See <a href="https://youtu.be/w_r-cT2jngk?t=99">this short bit of video</a> for how to use it. Reducing to 1.3 million faces and exporting the mesh as an STL is sufficient for upload to Shapeways, for example.
 </p>
 </ul>
 
