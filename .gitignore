@@ -1,3 +1,4 @@
 *.gif
 *.stl
 *.DS_Store
+pngFrames/*
