@@ -3643,10 +3643,10 @@ class Jephthai extends Animator {
     {
       pushMatrix();
       rotate(newTime / RotationVelocity);
-      translate( 150, 0);
+      translate( Awidth * 150/600, 0);
       rotate(newTime / SpinVelocity);
-      scale( sin(newTime / SkewSine) + 0.2, cos(newTime / SkewCosine) + 0.2);
-      float factor = sin(newTime / 1000.0);
+      scale( (Awidth / 500.) * sin(newTime / SkewSine) + 0.2, (Awidth / 500.) * cos(newTime / SkewCosine) + 0.2);
+      float factor = (Awidth / 500.) * sin(newTime / 1000.0);
       scale( factor, factor);
       fill(((newTime * ColorVelocity) % 360), 50, 100, 20);
       ellipse(0, 0, 300, 300);

@@ -436,8 +436,8 @@ class Marcher {
     // perform any desired cleanup
   }
   
-  // set color
-  // Not actually called in the rest of the code, so the color is always white. TODO
+  // Set object color for the output frame.
+  // Currently not hooked up - TODO
   void setColor( color _facetColor )
   {
     facetColor = _facetColor;
@@ -462,12 +462,6 @@ class Marcher {
   void march(AUField lowerField, AUField upperField, float thickness) {
     // do marching cubes.
     PVector offset = new PVector();
-    
-    // Set fill color - grabbed from the global fill color; if the fill color
-    // changes per object, tough luck. We update the color only once per layer.
-    // See http://stackoverflow.com/questions/15432404/current-fill-color-in-processing
-    // for g.fillColor.
-    setColor( g.fillColor );
     
     // for testing, put these in separate variables
     int lowerx, upperx, lowery, uppery;
@@ -624,6 +618,8 @@ class Marcher {
 
     NumTriangles++;
     
+    // If you really don't want to use the facetColor, which is usually set from the
+    // fill color for the frame, use this next line and comment out writeColoredFacet():
     //SW.writeFacet(normal, ov1, ov3, ov2);
     SW.writeColoredFacet(normal, ov1, ov3, ov2, facetColor);
   }

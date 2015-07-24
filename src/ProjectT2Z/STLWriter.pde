@@ -59,7 +59,11 @@ class STLWriter extends BinaryWriter {
     writePVector(v1);
     writePVector(v2);
     byte[] spacer = new byte[2];
-    spacer[0] = spacer[1] = 0;
+    // In theory these next two bytes should be 0,0. I have noticed that Sketchfab
+    // has a bug, it considers 0,0 to be the color black. Setting these two values to
+    // all 1's should produce white.
+    //spacer[0] = spacer[1] = 0;
+    spacer[0] = spacer[1] = (byte)0xff;
     writeByteArray(spacer);
     facetCount++;
   }
