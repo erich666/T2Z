@@ -3569,16 +3569,27 @@ class Ag0035 extends Animator {
   }
 }
 
-// ================= Jephthai
+// ================= Jephthai Blob, from http://joshstone.us/blob/
 
 class Jephthai extends Animator {
   int Duration = 800;
   float Scale = 1.0;
   float Retention = 0.2;
+  float RotationVelocity = 60.;
+  float SpinVelocity = 20.;
+  float SkewSine = 50.;
+  float SkewCosine = 50.;
+  float ColorVelocity = 1.6;
+  
 
   String DurationLabel = "Duration";
   String ScaleLabel = "Scale";
   String RetentionLabel = "Retention";
+  String RotationVelocityLabel = "Rotation Velocity";
+  String SpinVelocityLabel = "Spin Velocity";
+  String SkewSineLabel = "Skew Sine";
+  String SkewCosineLabel = "Skew Cosine";
+  String ColorVelocityLabel = "Color Velocity";
 
   // From https://www.reddit.com/r/processing/comments/3dt69p/i_love_simple_code_that_makes_complicated_shapes/
   Jephthai() {
@@ -3587,6 +3598,11 @@ class Jephthai extends Animator {
     addSlider(sliders, DurationLabel, 1, 2000, Duration, true);  // "true" - it's an integer
     addSlider(sliders, ScaleLabel, 0.2, 3.0, Scale, false);  // "false" - it's a float
     addSlider(sliders, RetentionLabel, 0.0, 1.0, Retention, false);  // "false" - it's a float
+    addSlider(sliders, RotationVelocityLabel, 40., 60., RotationVelocity, false);  // "false" - it's a float
+    addSlider(sliders, SpinVelocityLabel, 10., 25., SpinVelocity, false);  // "false" - it's a float
+    addSlider(sliders, SkewSineLabel, 30., 60., SkewSine, false);  // "false" - it's a float
+    addSlider(sliders, SkewCosineLabel, 30., 60., SkewCosine, false);  // "false" - it's a float
+    //addSlider(sliders, ColorVelocityLabel, 1.2, 2.2, ColorVelocity, false);  // "false" - it's a float
   }
 
   void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -3594,6 +3610,11 @@ class Jephthai extends Animator {
     if (sliderName == DurationLabel) Duration = iValue;
     if (sliderName == ScaleLabel) Scale = fValue;
     if (sliderName == RetentionLabel) Retention = fValue;
+    if (sliderName == RotationVelocityLabel) RotationVelocity = fValue;
+    if (sliderName == SpinVelocityLabel) SpinVelocity = fValue;
+    if (sliderName == SkewSineLabel) SkewSine = fValue;
+    if (sliderName == SkewCosineLabel) SkewCosine = fValue;
+    if (sliderName == ColorVelocityLabel) ColorVelocity = fValue;
   }
 
   void restart() {
@@ -3613,21 +3634,21 @@ class Jephthai extends Animator {
 
     translate(Awidth/2., Aheight/2.);
     scale( Scale, Scale );
-    
-    float count = time * Duration;
-    int startTime = (int)(count - Duration * Retention);
+
+    int count = (int)(time * Duration);
+    int startTime = (int)(count - (1.-time) * Duration * Retention);
     if ( startTime < 0 )
       startTime = 0;
     for ( int newTime = startTime; newTime < count; newTime++ )
     {
       pushMatrix();
-      rotate(newTime / 60.0);
+      rotate(newTime / RotationVelocity);
       translate( 150, 0);
-      rotate(newTime / 20.0);
-      scale( sin(newTime / 50.0) + 0.2, cos(newTime / 50.0) + 0.2);
+      rotate(newTime / SpinVelocity);
+      scale( sin(newTime / SkewSine) + 0.2, cos(newTime / SkewCosine) + 0.2);
       float factor = sin(newTime / 1000.0);
       scale( factor, factor);
-      fill((newTime * 1.6 % 360), 50, 100, 20);
+      fill(((newTime * ColorVelocity) % 360), 50, 100, 20);
       ellipse(0, 0, 300, 300);
       popMatrix();
     }
