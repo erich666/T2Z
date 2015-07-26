@@ -70,7 +70,7 @@ class STLWriter extends BinaryWriter {
 
   // write a color facet to the output file
   // https://en.wikipedia.org/wiki/STL_(file_format)#Color_in_binary_STL
-  void writeColoredFacet(PVector n, PVector v0, PVector v1, PVector v2, color fill ) {
+  void writeColoredFacet(PVector n, PVector v0, PVector v1, PVector v2, color clr ) {
     writePVector(n);
     writePVector(v0);
     writePVector(v1);
@@ -78,9 +78,9 @@ class STLWriter extends BinaryWriter {
     byte[] spacer = new byte[2];
     // Output VisCAM color
     // top 5 bits of blue and 3 of top 5 of green
-    spacer[0] = (byte)(( (fill>> 3) & 0x1F ) | ( (fill>>6) & 0xE0 ));
+    spacer[0] = (byte)(( (clr>> 3) & 0x1F ) | ( (clr>>6) & 0xE0 ));
     // top 2 bits of green and top 5 bits of red; very top bit is 1 to denote a color is being used
-    spacer[1] = (byte)(( (fill>>14) & 0x03 ) | ( (fill>>17) & 0x7C ) | 0x80);
+    spacer[1] = (byte)(( (clr>>14) & 0x03 ) | ( (clr>>17) & 0x7C ) | 0x80);
     writeByteArray(spacer);
     facetCount++;
   }

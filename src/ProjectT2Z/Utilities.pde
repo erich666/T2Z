@@ -76,17 +76,17 @@ void processFieldPair() {
   float percentDone = norm(NextSliceNumber, 0, SculptureTotalSlices);
   if (SincludeBlock && (percentDone > SblockStart) && (!WroteBlock)) {
     // insert a block between the lower and upper fields
-    TheMarcher.processFields(LowerField, BlockField, 1);
+    TheMarcher.processFields(LowerField, BlockField, 1, BlockColor);
     if ( SculptureBlockThickness > 1 ) {
-      TheMarcher.processFields(BlockField, BlockField, SculptureBlockThickness - 1);
+      TheMarcher.processFields(BlockField, BlockField, SculptureBlockThickness - 1, BlockColor);
     }
-    TheMarcher.processFields(BlockField, UpperField, 1);
+    TheMarcher.processFields(BlockField, UpperField, 1, BlockColor);
     WroteBlock = true;
   }
   else
   {
     // write out the normal slice
-    TheMarcher.processFields(LowerField, UpperField, 1);
+    TheMarcher.processFields(LowerField, UpperField, 1, SliceColor);
   }
 }
 
@@ -247,11 +247,11 @@ void initNewSculpture() {
 void concludeSculptureCreation() {
   // write the block and finish it, if needed
   if (SincludeBlock && (!WroteBlock)) {
-    TheMarcher.processFields(UpperField, BlockField, 1);
+    TheMarcher.processFields(UpperField, BlockField, 1, BlockColor);
     if ( SculptureBlockThickness > 1 ) {
-      TheMarcher.processFields(BlockField, BlockField, SculptureBlockThickness - 1);
+      TheMarcher.processFields(BlockField, BlockField, SculptureBlockThickness - 1, BlockColor);
     }
-    TheMarcher.processFields(BlockField, AllOutsideField, 1);
+    TheMarcher.processFields(BlockField, AllOutsideField, 1, BlockColor);
     WroteBlock = true;
   } else {
     // Have to write a final "capping" frame.
@@ -309,6 +309,7 @@ vice-versa. But it's easy to just treat them all as possibilities.
 
 void drawAnimation(float time) {  
   background(BackgroundColor);
+  SliceColor = ModelColor;  // each slice is model color unless explicitly over-written
   renderAnimation(time);
   Camera.expose();
   if (Camera.isReadyToSave()) {
@@ -397,13 +398,17 @@ void restartAnimation() {
   if (anim.needsRebuild) {
     GSlider req = anim.SliderRequestingRebuild;
     if ((req == null)  || (!req.hasFocus())) {
+      pushStyle();
       anim.rebuild();
+      popStyle();
       anim.SliderRequestingRebuild = null;
       anim.needsRebuild = false;
       RequestStopAnimating = false;
     }
   }
+  pushStyle();
   anim.restart();
+  popStyle();
 }
 
 void renderAnimation(float time) {

@@ -73,6 +73,16 @@ int TotalMillis = 0;
 
 // User variables not controlled by any UI widgets
 
+/* The colors for the model. By default, everything will be the color given
+by ModelColor. If you specify BlockColor in your animation (usually in the
+constructor or restart()) then the block will be that color. If you specify 
+SliceColor (in render() only) then that slice (and only that slice) will have
+that color.
+*/
+color ModelColor = color(255);  // white model
+color BlockColor = color(255);  // white block
+color SliceColor = ModelColor;  // slices default to model color
+
 /* 
 The colors for animated gifs are selected by a neural net. It takes a single argument that
 is undocumented, but smaller values are supposed to result in better color selections. They

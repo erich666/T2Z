@@ -24,7 +24,6 @@ class Marcher {
   // class variables for the marcher can go here
   STLWriter SW;
   float heightScale, crossSectionScale;
-  color facetColor = color(255,255,255);
   PVector scaleFactor;
   
   float Isolevel = 0.5;
@@ -435,14 +434,7 @@ class Marcher {
   void destroy() {
     // perform any desired cleanup
   }
-  
-  // Set object color for the output frame.
-  // Currently not hooked up - TODO
-  void setColor( color _facetColor )
-  {
-    facetColor = _facetColor;
-  }
-  
+    
   /* The main entry point.
   We're given two AUFields. They normally have only two values: 0 and 1.
   0 means the corresponding "pixel" is inside, 1 means it's outside.
@@ -452,14 +444,15 @@ class Marcher {
   Each field's dimensions are given by the member variables w and h. Thus,
     lowerField.w = (2*Border)+MarchWid       and     lowerField.h = (2*Border)+MarchHgt
   Since both fields are the same size, the above is also true for upperField.
+  The color is the color of the material in this slice. The entire slice is that color.
   */
-  void processFields(AUField lowerField, AUField upperField, float thickness) {
-    march(lowerField, upperField, thickness);
+  void processFields(AUField lowerField, AUField upperField, float thickness, color clr) {
+    march(lowerField, upperField, thickness, clr);
     SliceNumber += thickness;
   }
   
   // thickness is how many unit-slices are spanned between these two fields
-  void march(AUField lowerField, AUField upperField, float thickness) {
+  void march(AUField lowerField, AUField upperField, float thickness, color facetColor) {
     // do marching cubes.
     PVector offset = new PVector();
     
@@ -618,9 +611,6 @@ class Marcher {
 
     NumTriangles++;
     
-    // If you really don't want to use the facetColor, which is usually set from the
-    // fill color for the frame, use this next line and comment out writeColoredFacet():
-    //SW.writeFacet(normal, ov1, ov3, ov2);
     SW.writeColoredFacet(normal, ov1, ov3, ov2, facetColor);
   }
   

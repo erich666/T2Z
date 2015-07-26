@@ -124,7 +124,9 @@ void animationSliderCallback(GSlider slider, GEvent event) {
       if (slider == animSlider) {
         GLabel label = sset.labelList.get(j);
         String sliderName = label.getText();
+        pushStyle();
         anim.sliderChanged(sliderName, slider.getValueI(), slider.getValueF());
+        popStyle();
         if (sset.needsRebuild.get(j) != 0) {
           anim.needsRebuild = true;
           anim.SliderRequestingRebuild = slider;

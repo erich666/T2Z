@@ -32,7 +32,7 @@ How to create an animation:
  width           Awidth
  height          Aheight
  draw()          render(time)
- setup()         usually the constructor, but restart() if necessary
+ setup()         usually the constructor, but often restart(). use rebuild() when necessary.
  
  ###### Details
  
@@ -106,23 +106,26 @@ How to create an animation:
  23    }
  24
  25    void restart() {
- 26       BackgroundColor = color(255, 205, 180); // Important! Set background color
- 27    }
- 28
- 29    void render(float time) {
- 30       background(BackgroundColor);
- 31       noStroke();
- 32       fill(Redness, 128, 128);
- 33       float sideLen = SquareSize * Awidth;
- 34       float circleR = CircleRadius * Awidth;
- 35       pushMatrix();
- 36          translate(Awidth/2., Aheight/2.);
- 37          rotate(TWO_PI * time);
- 38          translate(circleR, 0);
- 39       rect(-sideLen/2., -sideLen/2., sideLen, sideLen);
- 40       popMatrix();
- 41    }
- 42 }
+ 26       BackgroundColor = color(255, 205, 180); // Important! Set background color 
+ 27       ModelColor = color(255, 0, 0);     // model is pure red
+ 28       BlockColor = color(255, 255, 0);  // the block is yellow
+ 29    }
+ 30
+ 31    void render(float time) {
+ 32       background(BackgroundColor);
+ 33       if ((time > .4) && (time < .6)) SliceColor = color(0, 0, 255);  // middle chunk is blue
+ 34       noStroke();
+ 35       fill(Redness, 128, 128);
+ 36       float sideLen = SquareSize * Awidth;
+ 37       float circleR = CircleRadius * Awidth;
+ 38       pushMatrix();
+ 39          translate(Awidth/2., Aheight/2.);
+ 40          rotate(TWO_PI * time);
+ 41          translate(circleR, 0);
+ 42       rect(-sideLen/2., -sideLen/2., sideLen, sideLen);
+ 43       popMatrix();
+ 44    }
+ 45 }
  
  ###### LINE 1
  1 class OneRotatingSquare extends Animator {
@@ -170,6 +173,28 @@ How to create an animation:
  routine (line 27) can just read the data and quickly draw the appropriate picture
  for any given moment.
  
+ IMPORTANT NOTE FOR ADVANCED USERS: If you use Processing's built-in 
+ routine colorMode() to change the color model or the ranges of color values
+ inside of your constructor, you MUST restore the default color model before 
+ leaving your constructor. There are two ways to do this. One way is to explicitly 
+ call colorMode(RGB, 255, 255, 255, 255) to reset everything back to the original, 
+ default settings. An easier and more general way is to call pushStyle() at the 
+ start of your routine, and popStyle() at the end. 
+ 
+ If you forget to restore these defaults using one of these methods, your 
+ color model will stay in effect for all the remaining animator constructors, 
+ which will affect any colors they define or work with. This will probably
+ cause the resulting animations to look wrong, and will likely prove to be
+ a hair-pulling process to debug. So don't forget to restore the color model! 
+ It is usually good programming style in Processing to always reset the
+ default color mode as soon as possible after you change it, but in this
+ case it's required. 
+ 
+ All of the routines listed below will have the default color model (RGB,
+ with values 0-255 for each component) in place when they're called; if 
+ you call colorMode() inside of those routines, remember to use one of the 
+ above methods to restore the color mode to the default before you exit.
+ 
  ###### LINE 11
  11     super("One Rotating Square");               // this line MUST be the first one in the procedure
  
@@ -178,7 +203,6 @@ How to create an animation:
  as you want it to appear in the drop-down list in the user interface. I almost
  always use the same name as that given in Line 1, except because this is a 
  String I can include spaces.
- 
  
  ###### LINES 13-14
  13       addSlider(sliders, RednessLabel, 0, 255, Redness, true);
@@ -229,8 +253,8 @@ How to create an animation:
  when you (or your user) stops moving a slider and lets go of the mouse, so 
  it's not called over and over as the user moves the slider around.
  
- ###### LINE 23
- 23    void rebuild() {
+ ###### LINE 22
+ 22    void rebuild() {
  
  This routine is called for "red" sliders. See the discussion of sliders in
  lines 13-14 above. Normally this routine is empty - you can even omit it
@@ -248,16 +272,51 @@ How to create an animation:
  change over the course of your animation, this is a good place to give them 
  starting values. 
  
- ###### LINE 26
+ ###### LINES 26-28
  26     BackgroundColor = color(255, 205, 180); // Important! Set background color
+ 27     ModelColor = color(255, 0, 0);     // model is pure red
+ 28     BlockColor = color(255, 255, 0);  // the block is yellow
  
- You MUST define the color for your animation's background in the pre-defined
- global variable BackgroundColor. Any pixels of this color will be considered
- "empty air" in your 3D sculpture. All other pixels will be considered to have
- "stuff" in them. Assign this value inside of restart(), not in your constructor.
+ When we make the model, we don't use the colors that you draw with. Instead,
+ you explicitly tell us what color each slice ought to be. 
+
+ We begin by defining BackgroundColor. This is ** REQUIRED! **. Each time you
+ draw a picture, we convert it into one "slice" of the 3D model. The first
+ step in that process is to remove all the pixels that are exactly the color
+ of BackgroundColor. Those turn into thin air.
+
+ The pixels that remain will have the color given by ModelColor. If you want
+ different slices to have different colors (for example, to have a blue
+ section in the middle of a red model, or to make a rainbow model running
+ up the length of the whole thing), you can overwrite this color on a per-slice
+ basis (see SliceColor, discussed on line 33).
  
- ###### LINE 29
- 29     void render(float time) {
+ If you choose to include a block, then it will have the color given by
+ BlockColor.
+ 
+ Keep in mind that these colors DO NOT AFFECT YOUR DRAWINGS. The idea is
+ that you can draw with any colors you like, so you can make a really cool
+ animation. When the picture is completed and saved, and we turn it into a
+ slice of a model, then these colors define how we convert your colorful
+ image into a slice of the 3D model, where all the material on that
+ slice has single, constant color.
+ 
+ So if you set the BackgroundColor to black, and the ModelColor to red,
+ and you draw a frame with 3 circles that are white, yellow, and green, the 
+ output image (saved as a gif animation or PNG files) will be a black 
+ background with white, yellow, and green circles, and that's what you'll 
+ see when  you run the animation. But the slice of the 3D model corresponding 
+ to that frame will be all air, except for red material where the three 
+ circles were located.
+ 
+ Setting BackgroundColor is REQUIRED. The other two will default to white if 
+ you don't set them yourself. 
+ 
+ Always assign these values in restart(), as shown here. Do not put them
+ in your constructor or the 3D model won't be built properly.
+  
+ ###### LINE 31
+ 31     void render(float time) {
  
  This is the start of the routine that draws your picture. It must appear just
  like this, with no changes. The procedure is provided with a floating-point
@@ -288,12 +347,21 @@ How to create an animation:
  to always figure out how far you were into the animation in order to draw the
  proper frame. Using time means you don't have to do that work.
  
- ###### LINE 30
- 30       background(BackgroundColor);
+ ###### LINE 32
+ 32       background(BackgroundColor);
  
  Clear the screen to your chosen background color. This is an important step!
  
- ###### LINES 31-41
+ ###### LINE 33
+ 33       if ((time > .4) && (time < .6)) SliceColor = color(0, 0, 255);  // middle chunk is blue
+ 
+ Here we decide to make the central 20 percent of the model pure blue by 
+ assigning blue to SliceColor. If you don't assign anything to SliceColor
+ for a given frame, it will have the default value of ModelColor. Remember
+ that for each frame, SliceColor will default to ModelColor. You must change
+ it for every frame you want to assign a different color to.
+ 
+ ###### LINES 34-43
  This is where you can put any drawing stuff you want. This routine is essentially
  your draw() in a typical Processing sketch. The big differences to keep in mind
  are DO NOT USE frameCount, width, or height. They won't reflect the value of 
@@ -411,10 +479,13 @@ class OneRotatingSquare extends Animator {
 
    void restart() {
       BackgroundColor = color(255, 205, 180); // Important! Set background color
+      ModelColor = color(255, 0, 0);     // model is pure red
+      BlockColor = color(255, 255, 0);  // the block is yellow
    }
 
    void render(float time) {
       background(BackgroundColor);
+      if ((time > .4) && (time < .6)) SliceColor = color(0, 0, 255);  // middle chunk is blue
       noStroke();
       fill(Redness, 128, 128);
       float sideLen = SquareSize * Awidth;
@@ -650,6 +721,8 @@ class TrailSpin extends Animator {
       addSlider(sliders, BallRadiusLabel, 0, .5, BallRadius, false);
       addSlider(sliders, InnerDistanceLabel, 0, .4, InnerDistance, false);
 
+      ModelColor = color(240, 45, 35);   // model is red
+      BlockColor = color(220, 205, 145); // block is yellow-ish
    }
 
    void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -667,6 +740,14 @@ class TrailSpin extends Animator {
    }
 
    void render(float time) {
+      if ((time > .1) && (time < .9)) {
+        SliceColor = color(64, 155, 176);
+        if ((time > .1) && (time < .4)) {
+          SliceColor = lerpColor(ModelColor, SliceColor, norm(time, .1, .4));
+        } else if (time > .6 && time < .9) {
+         SliceColor = lerpColor(SliceColor, ModelColor, norm(time, .6, .9));
+        }
+      }
       background(BackgroundColor);
       noStroke();
       fill(255);
@@ -2367,12 +2448,17 @@ class Dissection03 extends Animator {
   float D;
   float Cx, Cy; // Center of the frame
   Stepper323 Stepper;
+  color clr1 = color(240, 185, 155); // tan
+  color clr2 = color(90, 55, 35);  // dark brown
+  color clr3 = color(190, 105, 85); //muddy red
+  
   
   String SizeLabel = "Size";
   
   Dissection03() {
     super("Dissection 03");              
     addSlider(sliders, SizeLabel, 0.01, 2.0, Size, false);
+    ModelColor = clr1;
   }
   
   void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -2395,7 +2481,7 @@ class Dissection03 extends Animator {
     Stepper = new Stepper323(stepLengths);
   }
   
-  void render(float time) {
+  void render(float time) { 
     background(BackgroundColor);
     fill(0, 0, 0, 128);
     noStroke();
@@ -2408,14 +2494,13 @@ class Dissection03 extends Animator {
     switch (stepNum) {
        case 0: phase0(alfa); break;
        case 1: phase1(alfa); break;
-       // original code, but gives Mickey Mouse ears offscreen
-       //case 2: phase2(Stepper.alfa); break;
-       case 2: phase1(1.0); break;
+       case 2: phase2(alfa); break;
     }
     popMatrix();
   }
 
   void phase0(float alfa) {
+    SliceColor = lerpColor(clr1, clr2, alfa); 
     for (int i=0; i<4; i++) {
       pushMatrix();
         translate(Cx, Cy);
@@ -2426,6 +2511,7 @@ class Dissection03 extends Animator {
   }
    
   void phase1(float alfa) {
+    SliceColor = lerpColor(clr2, clr3, alfa); 
     float rotAngle = TWO_PI * lerp(0, 3./8., bias(alfa, .8));
     float cAngle = TWO_PI * lerp(3./8., 4./8., alfa);
     float dr = mag(Cx, Cy);
@@ -2446,11 +2532,9 @@ class Dissection03 extends Animator {
     }
   }
    
-  void phase2(float alfa) {
-    ellipse(0, 0, D, D);
-    ellipse(width, 0, D, D);
-    ellipse(width, height, D, D);
-    ellipse(0, height, D, D);
+  void phase2(float alfa) {   
+    phase1(1.0);    
+    SliceColor = lerpColor(clr3, clr1, alfa);  
   }
    
   float ease(float t) {
