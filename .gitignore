@@ -1,4 +1,4 @@
 *.gif
 *.stl
 *.DS_Store
-pngFrames/*.png
+src/ProjectT2Z/pngFrames/*
