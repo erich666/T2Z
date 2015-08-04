@@ -67,22 +67,22 @@ void invalidateMeasures() {
 }
 
 void invalidateCostEstimate() {
-  CostValueLabel.setText("Build sculpture");      
+  CostValueLabel.setText("Build sculpture");
   CostValueLabel.setLocalColorScheme(COLOR_SCHEME_BLACK_ON_GRAY);
 }
 
 void showCostEstimate() {
-  CostValueLabel.setText(Scost);      
+  CostValueLabel.setText(Scost);
   CostValueLabel.setLocalColorScheme(COLOR_SCHEME_BLACK_ON_WHITE);
 }
 
 void invalidateTriangleCount() {
-  TriangleCountValueLabel.setText("Build sculpture");      
+  TriangleCountValueLabel.setText("Build sculpture");
   TriangleCountValueLabel.setLocalColorScheme(COLOR_SCHEME_BLACK_ON_GRAY);
 }
 
 void showTriangleCount() {
-  TriangleCountValueLabel.setText(StriangleCount);      
+  TriangleCountValueLabel.setText(StriangleCount);
   TriangleCountValueLabel.setLocalColorScheme(COLOR_SCHEME_BLACK_ON_WHITE);
 }
 
@@ -179,7 +179,7 @@ public void SculptureCrossSectionScaleSlider_change1(GSlider source, GEvent even
 } 
 
 public void ExitButton_click(GButton source, GEvent event) { 
-  //println("button1 - GButton >> GEvent." + event + " @ " + millis());     
+  //println("button1 - GButton >> GEvent." + event + " @ " + millis());
   if (confirmExitWithDialog()) exit();
 } 
 

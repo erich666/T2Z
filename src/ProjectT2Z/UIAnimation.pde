@@ -115,7 +115,7 @@ void addSlider(SliderSet _sliderSet, String _label, float _minValue, float _maxV
 void animationSliderCallback(GSlider slider, GEvent event) {
   for (int i=0; i<AnimatorList.size(); i++) {
     Animator anim = AnimatorList.get(i);
-    SliderSet sset = anim.sliders;    
+    SliderSet sset = anim.sliders;
     if (sset == null) continue;
     ArrayList<GSlider> sliderList = sset.sliderList;
     if (sliderList == null) continue;
@@ -185,7 +185,7 @@ void handleChangedAnimationDropList() {
 
 // draw the animation window. That "synchronized" keyword is very important!
 synchronized public void AnimationWindow_draw1(GWinApplet appc, GWinData data) { 
-  appc.background(240);    
+  appc.background(240);
   for (GroupRect gr: AnimationWindowRects) {
     gr.render();
   }

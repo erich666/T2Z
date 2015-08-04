@@ -422,7 +422,7 @@ void buildAnimatorList() {
   
   //AnimatorList.add(new DoubleChainSpin());
   AnimatorList.add(new HackMe());
-  AnimatorList.add(new Sphereflake());
+  AnimatorList.add(new Wobbly());
   
   AnimatorList.add(new Merge());
   AnimatorList.add(new Shift());
@@ -431,7 +431,6 @@ void buildAnimatorList() {
   //AnimatorList.add(new Dissection02());
   AnimatorList.add(new Dissection03());
   //AnimatorList.add(new Dissection04());
-  AnimatorList.add(new Wobbly());
   //AnimatorList.add(new WindSpinner());
   
   AnimatorList.add(new Ag0011());
@@ -439,6 +438,7 @@ void buildAnimatorList() {
   //AnimatorList.add(new Ag0020());
   AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
+  AnimatorList.add(new Sphereflake());
   AnimatorList.add(new Jephthai());
 
   
@@ -526,12 +526,13 @@ class RotatingSquares extends Animator {
 
   void restart() {
     BackgroundColor = color(255, 205, 180);
+    ModelColor = color(0, 255, 255);
   }
 
   void render(float time) {
     background(BackgroundColor);
     stroke(0);
-    fill(0, 255, 255);
+    fill(ModelColor);
     int numSquares = NumSquares;
     float sqSize = SquareRadius * Awidth;
     float circleR = CircleRadius * Awidth;
@@ -579,13 +580,14 @@ class LissajousBall extends Animator {
   }
 
   void restart() { 
-    BackgroundColor = color(180, 205, 255); 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(255*Redness, 128, 128);
   }
 
   void render(float time) {
-    background(BackgroundColor);  
+    background(BackgroundColor);
     stroke(0);
-    fill(255*Redness, 128, 128);
+    fill(ModelColor);
     pushMatrix();
     translate(Awidth/2., Aheight/2.);
     float theta = TWO_PI * time;
@@ -600,7 +602,7 @@ class LissajousBall extends Animator {
 // ================= Spinning Dial
 
 class SpinningDial extends Animator {
-  float TriangleHeight = .49; 
+  float TriangleHeight = .49;
   float BaseRadius = .20;
 
   String TriangleHeightLabel = "Triangle Height";
@@ -618,12 +620,13 @@ class SpinningDial extends Animator {
   }
 
   void restart() { 
-    BackgroundColor = color(50, 255, 50); 
+    BackgroundColor = color(50, 255, 50);
+    ModelColor = color(255, 255, 0);
   }
 
   void render(float time) {
-    background(BackgroundColor);  
-    fill(255, 255, 0);
+    background(BackgroundColor);
+    fill(ModelColor);
     noStroke();
     pushMatrix();
     translate(Awidth/2., Aheight/2.);
@@ -668,12 +671,13 @@ class BallBurst extends Animator {
   }
 
   void restart() { 
-    BackgroundColor = color(180, 205, 255); 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(255, 255, 0);
   }
 
   void render(float time) {
-    background(BackgroundColor);  
-    fill(255, 255, 0);
+    background(BackgroundColor);
+    fill(ModelColor);
     noStroke();
     pushMatrix();
     translate(Awidth/2., Aheight/2.);
@@ -714,7 +718,7 @@ class TrailSpin extends Animator {
       super("Trail Spin");               // this line MUST be the first one in the procedure
 
       addSlider(sliders, NumSpokesLabel, 2, 10, NumSpokes, true);
-      addSlider(sliders, TrailLenLabel, 0, .5, TrailLen, false);      
+      addSlider(sliders, TrailLenLabel, 0, .5, TrailLen, false);
       addSlider(sliders, SpeedChangeFactorLabel, -3, 3, SpeedChangeFactor, true);
       addSlider(sliders, OffsetPerRingLabel, 0, 1, OffsetPerRing, false);
       addSlider(sliders, NumBallsLabel, 0, 10, NumBalls, true);
@@ -761,7 +765,7 @@ class TrailSpin extends Animator {
           float rsgn = 1;
           if (i%2 == 0) rsgn = SpeedChangeFactor;
           if (rsgn == 0) rsgn = 1;
-          rotate(rsgn * TWO_PI * (time+a));                      
+          rotate(rsgn * TWO_PI * (time+a));
           for (int b=0; b<NumBalls; b++) {
             rotate(TWO_PI * OffsetPerRing * b);
             float ba = norm(b, 0, NumBalls-1);
@@ -815,12 +819,13 @@ class DoubleChainSpin extends Animator {
   }
 
   void restart() { 
-    BackgroundColor = color(180, 205, 255); 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(255, 255, 0);
   }
 
   void render(float time) {
-    background(BackgroundColor);  
-    fill(255, 255, 0);
+    background(BackgroundColor);
+    fill(ModelColor);
     noStroke();
     int numHoriz = HorizLinks;
     int numVert = VertLinks;
@@ -1008,7 +1013,7 @@ class DoubleChainSpin extends Animator {
     }
   }
 
-  void HorizontalLink(float time, float radius, float startHeight, float lLength, float lWidth )
+  void HorizontalLink(float  time, float radius, float startHeight, float lLength, float lWidth )
   {
     // simple square link for now
     float myTime = time - startHeight;
@@ -1067,16 +1072,17 @@ class HackMe extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(180, 205, 255); 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(0, 139, 126);
   }
 
   // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
   void render(float time) {
     // Set the background color. For sculpture output this identifies the "outside" color.
     // Note that you can also draw with this color to "carve" out elements from an animation.
-    background(BackgroundColor); 
+    background(BackgroundColor);
     // The RGB color you'll fill objects with. 
-    fill(0, 139, 126);
+    fill(ModelColor);
     // Set this so that objects don't have outline edges. Edge thickness can be a bit tough
     // to control if you use "scale" at all.
     noStroke();
@@ -1168,186 +1174,209 @@ void polygon(float x, float y, float radius, int npoints) {
   endShape(CLOSE);
 }
 
-// ================= Sphereflake
+// ================= Wobbly
 
-class Sphereflake extends Animator {
-  int numLevels = 4;
-  float Radius = 0.27;
-  float Overlap = 0.38;
-  float Reduction = 0.3333;
-  int spheresPerLevel = 12;
-  Sphere[] sphereList;
+class Wobbly extends Animator {
+  int objectModes = 3;
+  int wobbleModes = 3;
+  int rotationModes = 4;
+  int outerModes = 5;
+  int phaseModes = 2;
 
-  
-  int numSpheres;
-  color clr = color(59,92,136);
-  int sphereCount;
-  PVector[] axis12 = new PVector[12];
-  PVector zAxis = new PVector(0.,0.,1.);
+  int BurstMode = 153;
+  float BallRadius = .07;
+  float BurstRadius = 0.7;
+  float BurstOffset = .2;
+  float Wobble = 3.;
+  float RadialVariance = 1.5;
+  int NumBalls = 8;
 
-  String NumLevelsLabel = "Levels";
-  String RadiusLabel = "Sphere Radius";
-  String OverlapLabel = "Overlap";
-  String ReductionLabel = "Size Retained";
-  String NumSpheresLabel = "Spheres per Level";
+  String BurstModeLabel = "Burst Mode";
+  String BallRadiusLabel = "Ball Radius";
+  String BurstRadiusLabel = "Burst Radius";
+  String BurstOffsetLabel = "Burst Offset";
+  String WobbleLabel = "Wobble";
+  String RadialVarianceLabel = "Radial Variance";
+  String NumBallsLabel = "Number of Elements";
 
-  Sphereflake() {
-    super("Sphereflake");
-    // arguments: sliders, String label, minimum, maximum, variable to change, integer?
-    addSlider(sliders, NumLevelsLabel, 0,6, numLevels, true);  // "true" - it's an integer
-    addSlider(sliders, RadiusLabel, .01, .6, Radius, false);  // "false" - it's a floating point number
-    addSlider(sliders, OverlapLabel, .0, 1., Overlap, false);  // "false" - it's a floating point number
-    addSlider(sliders, ReductionLabel, .1, 1., Reduction, false);  // "false" - it's a floating point number
-    addSlider(sliders, NumSpheresLabel, 1,12, spheresPerLevel, true);  // "true" - it's an integer
+  Wobbly() {
+    super("Wobbly");
+    addSlider(sliders, BurstModeLabel, 0, objectModes*wobbleModes*phaseModes*rotationModes*outerModes-1, BurstMode, true);
+    addSlider(sliders, BallRadiusLabel, .01, .3, BallRadius, false);
+    addSlider(sliders, BurstRadiusLabel, .0, 1., BurstRadius, false);
+    addSlider(sliders, BurstOffsetLabel, .0, 0.3, BurstOffset, false);
+    addSlider(sliders, WobbleLabel, .0, 6.0, Wobble, false);
+    addSlider(sliders, RadialVarianceLabel, 0., 8.0, RadialVariance, false);
+    addSlider(sliders, NumBallsLabel, 1, 300, NumBalls, true);
   }
 
   void sliderChanged(String sliderName, int iValue, float fValue) {
-    // for each slider above, add a line here with the label, variable name, and integer/float value.
-    if (sliderName == NumLevelsLabel) numLevels = iValue;
-    if (sliderName == RadiusLabel) Radius = fValue;
-    if (sliderName == OverlapLabel) Overlap = fValue;
-    if (sliderName == ReductionLabel) Reduction = fValue;
-    if (sliderName == NumSpheresLabel) spheresPerLevel = iValue;
-    restart();
+    if (sliderName == BurstModeLabel) BurstMode = iValue;
+    if (sliderName == BallRadiusLabel) BallRadius = fValue;
+    if (sliderName == BurstRadiusLabel) BurstRadius = fValue;
+    if (sliderName == BurstOffsetLabel) BurstOffset = fValue;
+    if (sliderName == WobbleLabel) Wobble = fValue;
+    if (sliderName == RadialVarianceLabel) RadialVariance = fValue;
+    if (sliderName == NumBallsLabel) NumBalls = iValue;
   }
 
-  void restart() {
-    // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(244,183,80); 
-    makeSpheres();
+  void restart() { 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(0, 139, 126);
   }
 
-  // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
   void render(float time) {
-    // Set the background color. For sculpture output this identifies the "outside" color.
-    // Note that you can also draw with this color to "carve" out elements from an animation.
+    int divisor = 1;
+    int objectState = BurstMode % 3;
+    divisor *= objectModes;
+    int wobbleState = ( BurstMode / divisor ) % wobbleModes ;
+    divisor *= wobbleModes;
+    int rotationState = ( BurstMode / divisor ) % rotationModes ;
+    divisor *= rotationModes;
+    int outerState = ( BurstMode / divisor ) % outerModes ;
+    divisor *= outerModes;
+    int phaseState = ( BurstMode / divisor ) % phaseModes ;
+    divisor *= phaseModes;
+
     background(BackgroundColor);
-    fill(59,92,136);
+    fill(ModelColor);
+    noStroke();
+    float temp1, burstRadius1, burstRadius2;
+    // modes:
+    //         0  1  2  3
+    // rotate1 0  1  1  1
+    // rotate2 X  X -1  1
+    float rotate1 = rotationState;
+    float rotate2 = rotate1;
+    rotate1 = (rotate1 > 1.) ? 0. : 1.;
+    rotate2 -= 2.;
+    pushMatrix();
+    translate(Awidth/2., Aheight/2.);
+    //float dist = (Awidth/2.) * A3_BurstRadius * 2 * map(cos(TWO_PI * time), -1, 1, 0, 1);
+    for (int ballNum=0; ballNum<NumBalls; ballNum++) { 
+      float burstRadius = BurstRadius;
+      float a = norm(ballNum, 0, NumBalls);
+      float newTime = (phaseState==1 ? a : 0.) + time;
+      // if newTime > 1.0, make the object disappear
+      //if ( newTime <= 1.0 )
+      //{
+      newTime = time % 1.0;
+      switch ( outerState ) {
+      case 0:
+        // nada - no movement
+        break;
 
-    for (Sphere Sphere: sphereList) {
-      Sphere.render(time);
-    }
-  }
-   
-  void makeSpheres() {
-    numSpheres = 1;
-    for ( int i = 1; i <= numLevels; i++ ) {
-      numSpheres += pow(spheresPerLevel,i);
-    }
-    sphereList = new Sphere[numSpheres];
-    colorMode(RGB);
-    sphereCount = 0;
-    sphereList[sphereCount++] = new Sphere(0., 0., 0.5, Radius, clr);
-    // to rest on ground:
-    //sphereList[sphereCount++] = new Sphere(0., 0., Radius, Radius, clr);
-    if ( numLevels > 0 )
-    {
-      makeAxes();
-      PVector axis = new PVector(0.,0.,1.);
-      makeChildren( sphereList[0], axis, Radius*(1.+Reduction*(1.-Overlap)), numLevels-1 );
-    }
-  }
-  void makeAxes()
-  {
-    PVector yAxis = new PVector(0.,1.,0.);
-    for ( int i = 0; i < spheresPerLevel; i++ )
-    {
-      axis12[i] = new PVector( 1.,0.,0.);
-      // for first 6, we rotate 2*PI/6 - first one really needs no rotation
-      if ( i < 6 )
-      {
-        axis12[i].rotate( float(i)*TWO_PI/6. );
-      }
-      else if ( i < 9 )
-      {
-        // first rotate along Y axis by asin(sqrt(6)/3) - sphere packing distance
-        axis12[i] = rotateVert( axis12[i], -asin(sqrt(6.)/3.), yAxis );
-        // then rotate along Z axis by offset
-        axis12[i] = rotateVert( axis12[i], (float(i)+0.25)*TWO_PI/3., zAxis );
-      }
-      else
-      {
-        // first rotate along Y axis by asin(sqrt(6)/3) - sphere packing distance
-        axis12[i] = rotateVert( axis12[i], asin(sqrt(6.)/3.), yAxis );
-        // then rotate along Z axis by offset
-        axis12[i] = rotateVert( axis12[i], (float(i)+0.25)*TWO_PI/3., zAxis );
-      }
-    }
-  }
-  
-  // angle is in radians
-  PVector rotateVert(PVector vert, float angle, PVector axis){
-    PVector clone = new PVector(vert.x,vert.y,vert.z);
-    PVector dst = new PVector();
-    //rotate using a matrix
-    PMatrix3D rMat = new PMatrix3D();
-    rMat.rotate(angle,axis.x,axis.y,axis.z);
-    rMat.mult(clone,dst);
-    return dst;
-  }
-  
-  void makeChildren( Sphere sphere, PVector axis, float scale, int levels ) {
-    PVector loc = new PVector();
-    PVector subaxis = new PVector();
-    PVector rotaxis = new PVector();
-    // rotate each ball placement axis so that it's relative to the passed in axis treated as +Z.
-    // In other words, rotate each axis from a +Z orientation to the passed in axis orientation.
-    float angle = -PVector.angleBetween( zAxis, axis );
-    if ( angle != 0. )
-    {
-      rotaxis.set(axis.y,-axis.x,0.);
-      rotaxis.normalize();
-    }
-    for ( int i = 0; i < spheresPerLevel; i++ )
-    //for ( int i = 0; i < 1; i++ )
-    {
-      // initialize the 12 locations compared to the origin
-      loc.set( axis12[i].x, axis12[i].y, axis12[i].z );
-      if ( angle != 0. )
-      {
-        loc = rotateVert( loc, angle, rotaxis);
-      }
-      subaxis.set( loc.x, loc.y, loc.z );
-      loc.mult( scale );
-      loc.add( sphere.cx, sphere.cy, sphere.cz );
-      // check axis passed in compared to +Z: rotate angle axis compare to this
-      sphereList[sphereCount] = new Sphere(loc.x,loc.y,loc.z, sphere.r*Reduction, clr);
-      if ( levels > 0 )
-      {
-        makeChildren( sphereList[sphereCount++], subaxis, sphere.r*Reduction*(1.+Reduction*(1.-Overlap)), levels-1 );
-      }
-      else
-      {
-        // simply note this one's used.
-        sphereCount++;
-      }
-    }
-  }
-}
+      case 1:
+        // sine with a hole
+        burstRadius *= (0.5+0.5*sin(newTime*PI));
+        // sphere - sphere is evil, actually, as it moves too fast at poles,
+        // making a thin sheet.
+        //temp1 = 2.*(newTime-0.5);
+        //burstRadius *= sqrt(1. - temp1*temp1);
+        break;
 
-class Sphere {
-  float cx, cy, cz, r;
-  color clr;
-  
-  Sphere(float _cx, float _cy, float _cz, float _r, color _clr) {
-    cx = _cx;
-    cy = _cy;
-    cz = _cz;
-    r = _r;
-    clr = _clr;
-  }
-  
-  void render(float t) {
-    // is sphere visible? Note we don't allow spheres to overlap the 0 or 1 time border
-    float radius = abs( cz - t );
-    if ( radius <= r )
-    {
-      radius = sqrt(r*r - radius*radius);
-      noStroke();
-      fill(clr);
-      // move to origin
-      ellipse((cx+0.5)*Awidth,(cy+0.5)*Aheight,2.*radius*Awidth,2.*radius*Aheight);
+      case 2:
+        // sawtooth
+        burstRadius *= 1. - abs(2.*(newTime-0.5));
+        break;
+
+      case 3:
+        // sine
+        burstRadius *= sin(newTime*PI);
+        break;
+
+      case 4:
+        // full cosine
+        burstRadius *= (1. - cos(newTime*TWO_PI))*0.5;
+        break;
+
+        /* 
+                     // hi/lo - basically /-\ sort of a shape (with hyphen moved up to top)
+                     temp1 = 0.3;
+                     if ( newTime > 1. - temp1 )
+                       burstRadius *= (1.-newTime)/temp1;
+                     else if ( newTime < temp1 )
+                       burstRadius *= newTime/temp1;
+                     break;
+                     */
+      }
+      //} else {
+      //  burstRadius = 0.;
+      //}
+
+      burstRadius1 = burstRadius2 = burstRadius;
+      switch ( wobbleState ) {
+      case 0:
+        // nada
+        break;
+
+      case 1:
+        // wobble out
+        burstRadius1 += BurstRadius*sin(Wobble*time*PI)/3.;
+        burstRadius2 -= BurstRadius*sin(Wobble*time*PI)/3.;
+        break;
+
+      case 2:
+        // phased wobble, offset by ball number
+        temp1 = 
+          burstRadius1 += BallRadius*sin(Wobble*(a+time)*PI)*2.;
+        burstRadius2 -= BallRadius*sin(Wobble*(a+time)*PI)*2.;
+      }
+      float dist = (Awidth/2.) * burstRadius1;
+      pushMatrix();
+      rotate(TWO_PI * (a + time*rotate1 - BurstOffset*cos(2.0*TWO_PI*time)));
+      //float radius = BallRadius * ( 1. + amp + amp * abs(cos(5.*TWO_PI * (time + float(ballNum)/float(NumBalls)))) );
+      float radius = BallRadius * 0.5 * (1. + 0.5*RadialVariance * (1.0-sin(3.0*newTime*PI)));
+      switch ( objectState ) {
+      case 0:
+        // circle
+        ellipse(dist, 0.0, Awidth*radius, Awidth*radius);
+        break;
+
+      case 1:
+        // square
+        rect(dist-(Awidth*radius)/2., -(Awidth*radius)/2., Awidth*radius, Awidth*radius);
+        break;
+
+      case 2:
+        // triangle
+        // up the radius a little to make the object more solid
+        //radius *= 1.4;
+        triangle(dist-(Awidth*radius)/sqrt(3.), -(Awidth*radius), 
+        dist-(Awidth*radius)/sqrt(3.), (Awidth*radius), 
+        dist+(Awidth*radius)*2./sqrt(3.), 0.);
+      }
+      popMatrix();
+      dist = (Awidth/2.) * burstRadius2;
+      pushMatrix();
+      if (rotate2 > -2.)
+      {
+        rotate(TWO_PI * a + rotate2 * PI * time + BurstOffset*cos(2.0*TWO_PI*time));
+        //float radius = BallRadius * ( 1. + amp + amp * abs(cos(5.*TWO_PI * (time + float(ballNum)/float(NumBalls)))) );
+        radius = BallRadius * 0.5 * (1. + 0.5*RadialVariance * (1.0-sin(3.0*newTime*PI)));
+        switch ( objectState ) {
+        case 0:
+          // circle
+          ellipse(dist, 0.0, Awidth*radius, Awidth*radius);
+          break;
+
+        case 1:
+          // square
+          rect(dist-(Awidth*radius)/2., -(Awidth*radius)/2., Awidth*radius, Awidth*radius);
+          break;
+
+        case 2:
+          // triangle
+          // up the radius a little to make the object more solid
+          //radius *= 1.4;
+          triangle(dist-(Awidth*radius)/sqrt(3.), -(Awidth*radius), 
+          dist-(Awidth*radius)/sqrt(3.), (Awidth*radius), 
+          dist+(Awidth*radius)*2./sqrt(3.), 0.);
+        }
+      }
+      popMatrix();
     }
+    popMatrix();
   }
 }
 
@@ -1398,6 +1427,7 @@ class Merge extends Animator {
   void restart() {
     // the background color: 0-255 for red, green, and blue 
     BackgroundColor = color(243,207,9); //color(180, 205, 255);
+    ModelColor = FillColor;
     
     color strokeColor = color(0,0,0);
         
@@ -1439,7 +1469,7 @@ class Merge extends Animator {
       }
       */
       // randomish: myFill = color((i*60+72)%256,(i*138+140)%256,(i*198+33)%256);
-      ElementShiftList[i] = new ElementShift(xloc*StartScale, yloc*StartScale, strokeColor, FillColor);  
+      ElementShiftList[i] = new ElementShift(xloc*StartScale, yloc*StartScale, strokeColor, FillColor);
     }
     
     XFormLL = new XFormList[Steps];
@@ -1463,7 +1493,7 @@ class Merge extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1483,7 +1513,7 @@ class Merge extends Animator {
       } else {
         direction = 6;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1503,7 +1533,7 @@ class Merge extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1523,7 +1553,7 @@ class Merge extends Animator {
       } else {
         direction = 1;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1536,7 +1566,7 @@ class Merge extends Animator {
       } else {
         direction = 4;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }
     numStep++;
 
@@ -1556,7 +1586,7 @@ class Merge extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1576,7 +1606,7 @@ class Merge extends Animator {
       } else {
         direction = 4;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1596,7 +1626,7 @@ class Merge extends Animator {
       } else {
         direction = 6;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
   }
@@ -1605,7 +1635,7 @@ class Merge extends Animator {
   void render(float time) {
     // Set the background color. For sculpture output this identifies the "outside" color.
     // Note that you can also draw with this color to "carve" out elements from an animation.
-    background(BackgroundColor); 
+    background(BackgroundColor);
     // The RGB color you'll fill objects with. 
     fill(FillColor);
     // Set this so that objects don't have outline edges. Edge thickness can be a bit tough
@@ -1712,6 +1742,7 @@ class Shift extends Animator {
   void restart() {
     // the background color: 0-255 for red, green, and blue 
     BackgroundColor = color(250,240,200); //color(180, 205, 255);
+    ModelColor = FillColor;
     
     color strokeColor = color(0,0,0);
         
@@ -1741,7 +1772,7 @@ class Shift extends Animator {
       }
       yloc = yloc / 2.;
 
-      ElementShiftList[i] = new ElementShift(xloc*StartScale, yloc*StartScale, strokeColor, FillColor);  
+      ElementShiftList[i] = new ElementShift(xloc*StartScale, yloc*StartScale, strokeColor, FillColor);
     }
     
     XFormLL = new XFormList[Steps];
@@ -1765,7 +1796,7 @@ class Shift extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1778,7 +1809,7 @@ class Shift extends Animator {
       } else {
         direction = 4;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }
     numStep++;
 
@@ -1798,7 +1829,7 @@ class Shift extends Animator {
       } else {
         direction = 6;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1818,7 +1849,7 @@ class Shift extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1838,7 +1869,7 @@ class Shift extends Animator {
       } else {
         direction = 1;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1858,7 +1889,7 @@ class Shift extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
 
@@ -1878,7 +1909,7 @@ class Shift extends Animator {
       } else {
         direction = 2;
       }
-      XFormLL[numStep].ele[i] = new XForm(direction);  
+      XFormLL[numStep].ele[i] = new XForm(direction);
     }    
     numStep++;
   }
@@ -1887,9 +1918,9 @@ class Shift extends Animator {
   void render(float time) {
     // Set the background color. For sculpture output this identifies the "outside" color.
     // Note that you can also draw with this color to "carve" out elements from an animation.
-    background(BackgroundColor); 
+    background(BackgroundColor);
     // The RGB color you'll fill objects with. 
-    fill(0, 139, 126);
+    fill(FillColor);
     // Set this so that objects don't have outline edges. Edge thickness can be a bit tough
     // to control if you use "scale" at all.
     noStroke();
@@ -2126,16 +2157,17 @@ class Vase extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(180, 205, 255); 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(0, 139, 126);
   }
 
   // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
   void render(float time) {
     // Set the background color. For sculpture output this identifies the "outside" color.
     // Note that you can also draw with this color to "carve" out elements from an animation.
-    background(BackgroundColor); 
+    background(BackgroundColor);
     // The RGB color you'll fill objects with. 
-    fill(0, 139, 126);
+    fill(ModelColor);
     // Set this so that objects don't have outline edges. Edge thickness can be a bit tough
     // to control if you use "scale" at all.
     noStroke();
@@ -2230,7 +2262,7 @@ class Dissection01 extends Animator {
   String SizeLabel = "Size";
   
   Dissection01() {
-    super("Dissection 01");              
+    super("Dissection 01");
     addSlider(sliders, SizeLabel, 0, .5, Size, false);
   }
   
@@ -2243,6 +2275,7 @@ class Dissection01 extends Animator {
   
   void restart() {
     BackgroundColor = color(140, 65, 60); // Important! Set background color
+    ModelColor = color(220, 165, 65);
     Cx = Awidth/2.;
     Cy = Aheight/2.;
     
@@ -2259,7 +2292,7 @@ class Dissection01 extends Animator {
   
   void render(float time) {
     background(BackgroundColor);
-    fill(220, 165, 65);
+    fill(ModelColor);
     stroke(220, 165, 65); // make sure pieces don't disconnect
     S = Awidth * Size;
     S2 = S/2.;  // we use this so much, it's nice to have it around in a variable
@@ -2327,7 +2360,7 @@ class Dissection02 extends Animator {
   String SizeLabel = "Size";
   
   Dissection02() {
-    super("Dissection 02");              
+    super("Dissection 02");
     addSlider(sliders, SizeLabel, 0.01, 2.0, Size, false);
   }
   
@@ -2340,6 +2373,8 @@ class Dissection02 extends Animator {
   
   void restart() {
     BackgroundColor = color(255); // Important! Set background color
+    // model color is not black, as a black model is hard to discern in most viewers
+    ModelColor = color(128,128,128);
     Cx = Awidth/2.;
     Cy = Aheight/2.;
     S = Awidth * .4;
@@ -2456,7 +2491,7 @@ class Dissection03 extends Animator {
   String SizeLabel = "Size";
   
   Dissection03() {
-    super("Dissection 03");              
+    super("Dissection 03");
     addSlider(sliders, SizeLabel, 0.01, 2.0, Size, false);
     ModelColor = clr1;
   }
@@ -2500,7 +2535,7 @@ class Dissection03 extends Animator {
   }
 
   void phase0(float alfa) {
-    SliceColor = lerpColor(clr1, clr2, alfa); 
+    SliceColor = lerpColor(clr1, clr2, alfa);
     for (int i=0; i<4; i++) {
       pushMatrix();
         translate(Cx, Cy);
@@ -2511,7 +2546,7 @@ class Dissection03 extends Animator {
   }
    
   void phase1(float alfa) {
-    SliceColor = lerpColor(clr2, clr3, alfa); 
+    SliceColor = lerpColor(clr2, clr3, alfa);
     float rotAngle = TWO_PI * lerp(0, 3./8., bias(alfa, .8));
     float cAngle = TWO_PI * lerp(3./8., 4./8., alfa);
     float dr = mag(Cx, Cy);
@@ -2533,8 +2568,8 @@ class Dissection03 extends Animator {
   }
    
   void phase2(float alfa) {   
-    phase1(1.0);    
-    SliceColor = lerpColor(clr3, clr1, alfa);  
+    phase1(1.0);
+    SliceColor = lerpColor(clr3, clr1, alfa);
   }
    
   float ease(float t) {
@@ -2560,7 +2595,7 @@ class Dissection04 extends Animator {
   String SizeLabel = "Size";
   
   Dissection04() {
-    super("Dissection 04");              
+    super("Dissection 04");
     addSlider(sliders, SizeLabel, 0.01, 2.0, Size, false);
   }
   
@@ -2573,6 +2608,7 @@ class Dissection04 extends Animator {
   
   void restart() {
     BackgroundColor = color(90, 50, 30); // Important! Set background color
+    ModelColor = color(255, 155, 45);
     Cx = Awidth/2.;
     Cy = Aheight/2.;
  
@@ -2594,7 +2630,7 @@ class Dissection04 extends Animator {
   
   void render(float time) {
     background(BackgroundColor);
-    fill(255, 155, 45);
+    fill(ModelColor);
     stroke(255, 155, 45);
         translate(Cx, Cy);
     scale(Size);
@@ -2826,211 +2862,6 @@ class Dissection04 extends Animator {
   }
 }
 
-// ================= Wobbly
-
-class Wobbly extends Animator {
-  int objectModes = 3;
-  int wobbleModes = 3;
-  int rotationModes = 4;
-  int outerModes = 5;
-  int phaseModes = 2;
-
-  int BurstMode = 153;
-  float BallRadius = .07;
-  float BurstRadius = 0.7;
-  float BurstOffset = .2;
-  float Wobble = 3.;
-  float RadialVariance = 1.5;
-  int NumBalls = 8;
-
-  String BurstModeLabel = "Burst Mode";
-  String BallRadiusLabel = "Ball Radius";
-  String BurstRadiusLabel = "Burst Radius";
-  String BurstOffsetLabel = "Burst Offset";
-  String WobbleLabel = "Wobble";
-  String RadialVarianceLabel = "Radial Variance";
-  String NumBallsLabel = "Number of Elements";
-
-  Wobbly() {
-    super("Wobbly");
-    addSlider(sliders, BurstModeLabel, 0, objectModes*wobbleModes*phaseModes*rotationModes*outerModes-1, BurstMode, true);
-    addSlider(sliders, BallRadiusLabel, .01, .3, BallRadius, false);
-    addSlider(sliders, BurstRadiusLabel, .0, 1., BurstRadius, false);
-    addSlider(sliders, BurstOffsetLabel, .0, 0.3, BurstOffset, false);
-    addSlider(sliders, WobbleLabel, .0, 6.0, Wobble, false);
-    addSlider(sliders, RadialVarianceLabel, 0., 8.0, RadialVariance, false);
-    addSlider(sliders, NumBallsLabel, 1, 300, NumBalls, true);
-  }
-
-  void sliderChanged(String sliderName, int iValue, float fValue) {
-    if (sliderName == BurstModeLabel) BurstMode = iValue;
-    if (sliderName == BallRadiusLabel) BallRadius = fValue;
-    if (sliderName == BurstRadiusLabel) BurstRadius = fValue;
-    if (sliderName == BurstOffsetLabel) BurstOffset = fValue;
-    if (sliderName == WobbleLabel) Wobble = fValue;
-    if (sliderName == RadialVarianceLabel) RadialVariance = fValue;
-    if (sliderName == NumBallsLabel) NumBalls = iValue;
-  }
-
-  void restart() { 
-    BackgroundColor = color(180, 205, 255); 
-  }
-
-  void render(float time) {
-    int divisor = 1;
-    int objectState = BurstMode % 3;
-    divisor *= objectModes;
-    int wobbleState = ( BurstMode / divisor ) % wobbleModes ;
-    divisor *= wobbleModes;
-    int rotationState = ( BurstMode / divisor ) % rotationModes ;
-    divisor *= rotationModes;
-    int outerState = ( BurstMode / divisor ) % outerModes ;
-    divisor *= outerModes;
-    int phaseState = ( BurstMode / divisor ) % phaseModes ;
-    divisor *= phaseModes;
-
-    background(BackgroundColor);  
-    fill(0, 139, 126);
-    noStroke();
-    float temp1, burstRadius1, burstRadius2;
-    // modes:
-    //         0  1  2  3
-    // rotate1 0  1  1  1
-    // rotate2 X  X -1  1
-    float rotate1 = rotationState;
-    float rotate2 = rotate1;
-    rotate1 = (rotate1 > 1.) ? 0. : 1.;
-    rotate2 -= 2.;
-    pushMatrix();
-    translate(Awidth/2., Aheight/2.);
-    //float dist = (Awidth/2.) * A3_BurstRadius * 2 * map(cos(TWO_PI * time), -1, 1, 0, 1);
-    for (int ballNum=0; ballNum<NumBalls; ballNum++) { 
-      float burstRadius = BurstRadius;
-      float a = norm(ballNum, 0, NumBalls);
-      float newTime = (phaseState==1 ? a : 0.) + time;
-      // if newTime > 1.0, make the object disappear
-      //if ( newTime <= 1.0 )
-      //{
-      newTime = time % 1.0;
-      switch ( outerState ) {
-      case 0:
-        // nada - no movement
-        break;
-
-      case 1:
-        // sine with a hole
-        burstRadius *= (0.5+0.5*sin(newTime*PI));
-        // sphere - sphere is evil, actually, as it moves too fast at poles,
-        // making a thin sheet.
-        //temp1 = 2.*(newTime-0.5);
-        //burstRadius *= sqrt(1. - temp1*temp1);
-        break;
-
-      case 2:
-        // sawtooth
-        burstRadius *= 1. - abs(2.*(newTime-0.5));
-        break;
-
-      case 3:
-        // sine
-        burstRadius *= sin(newTime*PI);
-        break;
-
-      case 4:
-        // full cosine
-        burstRadius *= (1. - cos(newTime*TWO_PI))*0.5;
-        break;
-
-        /* 
-                     // hi/lo - basically /-\ sort of a shape (with hyphen moved up to top)
-                     temp1 = 0.3;
-                     if ( newTime > 1. - temp1 )
-                       burstRadius *= (1.-newTime)/temp1;
-                     else if ( newTime < temp1 )
-                       burstRadius *= newTime/temp1;
-                     break;
-                     */
-      }
-      //} else {
-      //  burstRadius = 0.;
-      //}
-
-      burstRadius1 = burstRadius2 = burstRadius;
-      switch ( wobbleState ) {
-      case 0:
-        // nada
-        break;
-
-      case 1:
-        // wobble out
-        burstRadius1 += BurstRadius*sin(Wobble*time*PI)/3.;
-        burstRadius2 -= BurstRadius*sin(Wobble*time*PI)/3.;
-        break;
-
-      case 2:
-        // phased wobble, offset by ball number
-        temp1 = 
-          burstRadius1 += BallRadius*sin(Wobble*(a+time)*PI)*2.;
-        burstRadius2 -= BallRadius*sin(Wobble*(a+time)*PI)*2.;
-      }
-      float dist = (Awidth/2.) * burstRadius1;
-      pushMatrix();
-      rotate(TWO_PI * (a + time*rotate1 - BurstOffset*cos(2.0*TWO_PI*time)));
-      //float radius = BallRadius * ( 1. + amp + amp * abs(cos(5.*TWO_PI * (time + float(ballNum)/float(NumBalls)))) );
-      float radius = BallRadius * 0.5 * (1. + 0.5*RadialVariance * (1.0-sin(3.0*newTime*PI)));
-      switch ( objectState ) {
-      case 0:
-        // circle
-        ellipse(dist, 0.0, Awidth*radius, Awidth*radius);
-        break;
-
-      case 1:
-        // square
-        rect(dist-(Awidth*radius)/2., -(Awidth*radius)/2., Awidth*radius, Awidth*radius);
-        break;
-
-      case 2:
-        // triangle
-        // up the radius a little to make the object more solid
-        //radius *= 1.4;
-        triangle(dist-(Awidth*radius)/sqrt(3.), -(Awidth*radius), 
-        dist-(Awidth*radius)/sqrt(3.), (Awidth*radius), 
-        dist+(Awidth*radius)*2./sqrt(3.), 0.);
-      }
-      popMatrix();
-      dist = (Awidth/2.) * burstRadius2;
-      pushMatrix();
-      if (rotate2 > -2.)
-      {
-        rotate(TWO_PI * a + rotate2 * PI * time + BurstOffset*cos(2.0*TWO_PI*time));
-        //float radius = BallRadius * ( 1. + amp + amp * abs(cos(5.*TWO_PI * (time + float(ballNum)/float(NumBalls)))) );
-        radius = BallRadius * 0.5 * (1. + 0.5*RadialVariance * (1.0-sin(3.0*newTime*PI)));
-        switch ( objectState ) {
-        case 0:
-          // circle
-          ellipse(dist, 0.0, Awidth*radius, Awidth*radius);
-          break;
-
-        case 1:
-          // square
-          rect(dist-(Awidth*radius)/2., -(Awidth*radius)/2., Awidth*radius, Awidth*radius);
-          break;
-
-        case 2:
-          // triangle
-          // up the radius a little to make the object more solid
-          //radius *= 1.4;
-          triangle(dist-(Awidth*radius)/sqrt(3.), -(Awidth*radius), 
-          dist-(Awidth*radius)/sqrt(3.), (Awidth*radius), 
-          dist+(Awidth*radius)*2./sqrt(3.), 0.);
-        }
-      }
-      popMatrix();
-    }
-    popMatrix();
-  }
-}
-
 // ================= WindSpinner 
 
 class WindSpinner_spinner {
@@ -3054,7 +2885,7 @@ class WindSpinner_spinner {
   void render(float time) {
     pushMatrix();
       pushStyle();
-        fill(clr);        
+        fill(clr);
         noStroke();
         translate(center.x, center.y);
         rotate(startTheta + (TWO_PI * time));
@@ -3123,7 +2954,7 @@ class WindSpinner extends Animator {
       int tryCount = 0;
       boolean packed = false;
       while ((!packed) && (tryCount++ < numTries)) {
-        PVector center = new PVector(random(thisR, Awidth-thisR), random(thisR, Aheight-thisR));          
+        PVector center = new PVector(random(thisR, Awidth-thisR), random(thisR, Aheight-thisR));
         float poleRadius = Awidth*.02;//max(Awidth*.005, thisR*.2);
         boolean canPack = packable(center, thisR, poleRadius);
         if (canPack) {
@@ -3156,11 +2987,12 @@ class WindSpinner extends Animator {
   }
   
   void restart() {     
-    BackgroundColor = color(255, 205, 180); 
+    BackgroundColor = color(255, 205, 180);
+    ModelColor = color(255);
   }
 
   void render(float time) {
-    background(BackgroundColor);  
+    background(BackgroundColor);
     for (int i=0; i<spinnerList.size(); i++) {
       WindSpinner_spinner spinner = spinnerList.get(i);
       spinner.render(time);
@@ -3210,7 +3042,8 @@ class Ag0011 extends Animator {
   }
 
   void restart() {     
-    BackgroundColor = color(170, 210, 200); 
+    BackgroundColor = color(170, 210, 200);
+    ModelColor = color(Ecolor);
     float CircleR11 = Awidth * .3;
     Element11List = new Element11[NumElement11s];
     for (int i=0; i<Element11List.length; i++) {
@@ -3285,7 +3118,6 @@ class Ag0012 extends Animator {
    
   color Ecolor = color(40, 35, 100, 192);
 
-
   float Overlap = 3.8;
   float Aspect = 1.;
 
@@ -3308,7 +3140,8 @@ class Ag0012 extends Animator {
   }
 
   void restart() {     
-    BackgroundColor = color(235, 235, 255); 
+    BackgroundColor = color(235, 235, 255);
+    ModelColor = color(Ecolor);
     float CircleR12 = Awidth * .1;
     Element12List = new Element12[NumElement12s];
     for (int i=0; i<Element12List.length; i++) {
@@ -3327,7 +3160,7 @@ class Ag0012 extends Animator {
   }
 
   void render(float time) {
-    background(BackgroundColor);  
+    background(BackgroundColor);
     for (int i=0; i<Element12List.length; i++) {
       Element12List[i].render(time, NumFrames12);
     }
@@ -3397,7 +3230,8 @@ class Ag0020 extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(47,3,2); 
+    BackgroundColor = color(47,3,2);
+    ModelColor = color(255);
     makeLeafs();
   }
 
@@ -3424,9 +3258,9 @@ class Ag0020 extends Animator {
       float r = LeafR;
       float angle = TWO_PI * a;
       float spinSpeed = 1;
-      colorMode(HSB); 
+      colorMode(HSB);
       int opacity = 128;
-      color clr = color(random(10,50), random(150,200), random(200,255), opacity); 
+      color clr = color(random(10,50), random(150,200), random(200,255), opacity);
       colorMode(RGB);
       LeafList[i] = new Leaf0020(cx, cy, r, angle, spinSpeed, clr);
     }
@@ -3519,14 +3353,15 @@ class Ag0033 extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(255, 255, 255); 
+    BackgroundColor = color(255, 255, 255);
+    ModelColor = color(ElementColor);
     CircleR = Awidth * .3;
     ElementList = new Element0033[NumElements];
     for (int i=0; i<ElementList.length; i++) {
       float xr = .1 * Overlap * (TWO_PI * CircleR / NumElements);
       float yr = Aspect * xr;
       float phase = TWO_PI * norm(i, 0, ElementList.length);
-      ElementList[i] = new Element0033(xr, yr, phase, StrokeColor, ElementColor);  
+      ElementList[i] = new Element0033(xr, yr, phase, StrokeColor, ElementColor);
     }
   }
 
@@ -3593,7 +3428,8 @@ class Ag0035 extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(255, 255, 255); 
+    BackgroundColor = color(255, 255, 255);
+    ModelColor = color(125, 85, 45);  // dark brown
   }
 
   // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
@@ -3613,7 +3449,7 @@ class Ag0035 extends Animator {
     float xstartFrame = 60-(35*ballSpeed);
     float xthisFrame = (fFrameCount-xstartFrame) % 240;
     float cx = ballSpeed * xthisFrame;
-    fill(125, 85, 45);  // dark brown
+    fill(ModelColor);  // dark brown
     ellipse(cx, 230, ballD, ballD);
     ellipse(cx-ballgap, 230, ballD, ballD);
     ellipse(cx+ballgap, 230, ballD, ballD);
@@ -3653,7 +3489,191 @@ class Ag0035 extends Animator {
   }
 }
 
-// ================= Jephthai Blob, from http://joshstone.us/blob/
+// ================= Sphereflake
+
+class Sphereflake extends Animator {
+  int numLevels = 4;
+  float Radius = 0.27;
+  float Overlap = 0.38;
+  float Reduction = 0.3333;
+  int spheresPerLevel = 12;
+  Sphere[] sphereList;
+
+  
+  int numSpheres;
+  color clr = color(59,92,136);
+  int sphereCount;
+  PVector[] axis12 = new PVector[12];
+  PVector zAxis = new PVector(0.,0.,1.);
+
+  String NumLevelsLabel = "Levels";
+  String RadiusLabel = "Sphere Radius";
+  String OverlapLabel = "Overlap";
+  String ReductionLabel = "Size Retained";
+  String NumSpheresLabel = "Spheres per Level";
+
+  Sphereflake() {
+    super("Sphereflake");
+    // arguments: sliders, String label, minimum, maximum, variable to change, integer?
+    addSlider(sliders, NumLevelsLabel, 0,6, numLevels, true);  // "true" - it's an integer
+    addSlider(sliders, RadiusLabel, .01, .6, Radius, false);  // "false" - it's a floating point number
+    addSlider(sliders, OverlapLabel, .0, 1., Overlap, false);  // "false" - it's a floating point number
+    addSlider(sliders, ReductionLabel, .1, 1., Reduction, false);  // "false" - it's a floating point number
+    addSlider(sliders, NumSpheresLabel, 1,12, spheresPerLevel, true);  // "true" - it's an integer
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    // for each slider above, add a line here with the label, variable name, and integer/float value.
+    if (sliderName == NumLevelsLabel) numLevels = iValue;
+    if (sliderName == RadiusLabel) Radius = fValue;
+    if (sliderName == OverlapLabel) Overlap = fValue;
+    if (sliderName == ReductionLabel) Reduction = fValue;
+    if (sliderName == NumSpheresLabel) spheresPerLevel = iValue;
+    restart();
+  }
+
+  void restart() {
+    // the background color: 0-255 for red, green, and blue 
+    BackgroundColor = color(244,183,80);
+    ModelColor = color(59,92,136);
+    makeSpheres();
+  }
+
+  // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
+  void render(float time) {
+    // Set the background color. For sculpture output this identifies the "outside" color.
+    // Note that you can also draw with this color to "carve" out elements from an animation.
+    background(BackgroundColor);
+    fill(ModelColor);
+
+    for (Sphere Sphere: sphereList) {
+      Sphere.render(time);
+    }
+  }
+   
+  void makeSpheres() {
+    numSpheres = 1;
+    for ( int i = 1; i <= numLevels; i++ ) {
+      numSpheres += pow(spheresPerLevel,i);
+    }
+    sphereList = new Sphere[numSpheres];
+    colorMode(RGB);
+    sphereCount = 0;
+    sphereList[sphereCount++] = new Sphere(0., 0., 0.5, Radius, clr);
+    // to rest on ground:
+    //sphereList[sphereCount++] = new Sphere(0., 0., Radius, Radius, clr);
+    if ( numLevels > 0 )
+    {
+      makeAxes();
+      PVector axis = new PVector(0.,0.,1.);
+      makeChildren( sphereList[0], axis, Radius*(1.+Reduction*(1.-Overlap)), numLevels-1 );
+    }
+  }
+  void makeAxes()
+  {
+    PVector yAxis = new PVector(0.,1.,0.);
+    for ( int i = 0; i < spheresPerLevel; i++ )
+    {
+      axis12[i] = new PVector( 1.,0.,0.);
+      // for first 6, we rotate 2*PI/6 - first one really needs no rotation
+      if ( i < 6 )
+      {
+        axis12[i].rotate( float(i)*TWO_PI/6. );
+      }
+      else if ( i < 9 )
+      {
+        // first rotate along Y axis by asin(sqrt(6)/3) - sphere packing distance
+        axis12[i] = rotateVert( axis12[i], -asin(sqrt(6.)/3.), yAxis );
+        // then rotate along Z axis by offset
+        axis12[i] = rotateVert( axis12[i], (float(i)+0.25)*TWO_PI/3., zAxis );
+      }
+      else
+      {
+        // first rotate along Y axis by asin(sqrt(6)/3) - sphere packing distance
+        axis12[i] = rotateVert( axis12[i], asin(sqrt(6.)/3.), yAxis );
+        // then rotate along Z axis by offset
+        axis12[i] = rotateVert( axis12[i], (float(i)+0.25)*TWO_PI/3., zAxis );
+      }
+    }
+  }
+  
+  // angle is in radians
+  PVector rotateVert(PVector vert, float angle, PVector axis){
+    PVector clone = new PVector(vert.x,vert.y,vert.z);
+    PVector dst = new PVector();
+    //rotate using a matrix
+    PMatrix3D rMat = new PMatrix3D();
+    rMat.rotate(angle,axis.x,axis.y,axis.z);
+    rMat.mult(clone,dst);
+    return dst;
+  }
+  
+  void makeChildren( Sphere sphere, PVector axis, float scale, int levels ) {
+    PVector loc = new PVector();
+    PVector subaxis = new PVector();
+    PVector rotaxis = new PVector();
+    // rotate each ball placement axis so that it's relative to the passed in axis treated as +Z.
+    // In other words, rotate each axis from a +Z orientation to the passed in axis orientation.
+    float angle = -PVector.angleBetween( zAxis, axis );
+    if ( angle != 0. )
+    {
+      rotaxis.set(axis.y,-axis.x,0.);
+      rotaxis.normalize();
+    }
+    for ( int i = 0; i < spheresPerLevel; i++ )
+    //for ( int i = 0; i < 1; i++ )
+    {
+      // initialize the 12 locations compared to the origin
+      loc.set( axis12[i].x, axis12[i].y, axis12[i].z );
+      if ( angle != 0. )
+      {
+        loc = rotateVert( loc, angle, rotaxis);
+      }
+      subaxis.set( loc.x, loc.y, loc.z );
+      loc.mult( scale );
+      loc.add( sphere.cx, sphere.cy, sphere.cz );
+      // check axis passed in compared to +Z: rotate angle axis compare to this
+      sphereList[sphereCount] = new Sphere(loc.x,loc.y,loc.z, sphere.r*Reduction, clr);
+      if ( levels > 0 )
+      {
+        makeChildren( sphereList[sphereCount++], subaxis, sphere.r*Reduction*(1.+Reduction*(1.-Overlap)), levels-1 );
+      }
+      else
+      {
+        // simply note this one's used.
+        sphereCount++;
+      }
+    }
+  }
+}
+
+class Sphere {
+  float cx, cy, cz, r;
+  color clr;
+  
+  Sphere(float _cx, float _cy, float _cz, float _r, color _clr) {
+    cx = _cx;
+    cy = _cy;
+    cz = _cz;
+    r = _r;
+    clr = _clr;
+  }
+  
+  void render(float t) {
+    // is sphere visible? Note we don't allow spheres to overlap the 0 or 1 time border
+    float radius = abs( cz - t );
+    if ( radius <= r )
+    {
+      radius = sqrt(r*r - radius*radius);
+      noStroke();
+      fill(clr);
+      // move to origin
+      ellipse((cx+0.5)*Awidth,(cy+0.5)*Aheight,2.*radius*Awidth,2.*radius*Aheight);
+    }
+  }
+}
+
+// ================= Jephthai Blob, from http://joshstone.us/blob/, used with permission
 
 class Jephthai extends Animator {
   int Duration = 800;
@@ -3703,7 +3723,7 @@ class Jephthai extends Animator {
 
   void restart() {
     // the background color: 0-255 for red, green, and blue 
-    BackgroundColor = color(0); 
+    BackgroundColor = color(0);
   }
 
   // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
@@ -3733,6 +3753,7 @@ class Jephthai extends Animator {
       float factor = (Awidth / 500.) * sin(newTime / 1000.0);
       scale( factor, factor);
       fill(((newTime * ColorVelocity) % 360), 50, 100, 20);
+      SliceColor = color(((newTime * ColorVelocity) % 360), 50, 100);
       ellipse(0, 0, 300, 300);
       popMatrix();
     }
@@ -3773,7 +3794,7 @@ class AnimatedGifReader extends Animator {
   int gifNumFrames, gifWidth, gifHeight;
   
    AnimatedGifReader() {
-      super("Animated Gif Reader"); 
+      super("Animated Gif Reader");
    }
 
    void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -3781,22 +3802,23 @@ class AnimatedGifReader extends Animator {
    }
    
    void rebuild() {    
-      gifFrames = Gif.getPImages(ThisApplet, gifFileName);  
+      gifFrames = Gif.getPImages(ThisApplet, gifFileName);
       assert gifFrames != null : "Gif input failed, no file found"; 
       assert gifFrames.length > 0 : "Gif input failed, no frames found"; 
       assert gifFrames[0].width > 0 : "Gif input failed, image width = 0"; 
       assert gifFrames[0].height > 0 : "Gif input failed, image height = 0"; 
-      gifFrames[0].loadPixels(); 
+      gifFrames[0].loadPixels();
       gifBackgroundColor = gifFrames[0].pixels[0]; // Background color is upper-left pixel
       BackgroundColor = gifBackgroundColor;
       gifNumFrames = gifFrames.length;
       gifWidth = gifFrames[0].width;
       gifHeight = gifFrames[0].height;
-      println("I read in animated gif "+gifFileName+" with "+gifNumFrames+" images, size "+gifWidth+" by "+gifHeight); 
+      println("I read in animated gif "+gifFileName+" with "+gifNumFrames+" images, size "+gifWidth+" by "+gifHeight);
    }
 
    void restart() {
-      BackgroundColor = gifBackgroundColor;      
+      BackgroundColor = gifBackgroundColor;
+      ModelColor = color(128);
       if (gifNumFrames != AnumFrames) {
         String warning = "The gif contains "+gifNumFrames+" frames but your Number of Frame slider is set to "+AnumFrames+". See message on console for details.";
         reportWarning("AnimatedGifReader restart", warning);
@@ -3852,7 +3874,7 @@ class FolderOfFramesReader extends Animator {
   int fileNumFrames, fileWidth, fileHeight;
   
    FolderOfFramesReader() {
-      super("Folder Of Frames Reader"); 
+      super("Folder Of Frames Reader");
       folderPath = SketchPath+"inputFrames/ag0085-pngFrames";
       File f = new File(folderPath);
       assert f != null : "FolderOfFramesReader could not open folder "+folderPath;
@@ -3860,13 +3882,13 @@ class FolderOfFramesReader extends Animator {
       assert fileNames != null : "FolderOfFramesReader found no input files";
       fileNumFrames = fileNames.size();
       PImage img = loadImage(folderPath+"/"+fileNames.get(0));
-      img.loadPixels(); 
+      img.loadPixels();
       fileBackgroundColor = img.pixels[0]; // Background color is upper-left pixel
       BackgroundColor = fileBackgroundColor;
       fileWidth = img.width;
       fileHeight = img.height;
       println("I read in folder "+folderPath);
-      println("Inside, I found "+fileNumFrames+" images, size "+fileWidth+" by "+fileWidth); 
+      println("Inside, I found "+fileNumFrames+" images, size "+fileWidth+" by "+fileWidth);
 
    }
 
@@ -3879,6 +3901,7 @@ class FolderOfFramesReader extends Animator {
 
    void restart() {
       BackgroundColor = fileBackgroundColor;      
+      ModelColor = color(128);
       if (fileNumFrames != AnumFrames) {
         String warning = "The folder contains "+fileNumFrames+" frames but your Number of Frame slider is set to "+AnumFrames+". See message on console for details.";
         reportWarning("FolderOfFramesReader restart", warning);
@@ -3943,7 +3966,8 @@ class HeightField extends Animator {
 
    void restart() {
       BackgroundColor = color(0);
-         if (256 > AnumFrames) {
+      ModelColor = color(255);
+      if (256 > AnumFrames) {
         String warning = "Your Number of Frame slider is set to "+AnumFrames+", but it should be 256 or more. See message on console for details.";
         reportWarning("HeightField restart", warning);
         println("  Your Number of Frame slider is set to "+AnumFrames+".");

@@ -139,7 +139,7 @@ class BinaryWriter {
   
   // convert an integer to bytes and save in the given buffer
   void intToBytes(int i, byte[] byteBuffer) {
-    bb.position(0);    
+    bb.position(0);
     b4 = bb.putInt(i).array();
     checkReverse(b4);
     for (int j=0; j<4; j++) byteBuffer[j] = b4[j];
@@ -147,7 +147,7 @@ class BinaryWriter {
     
   // convert a float to bytes and save in the given buffer
   void floatToBytes(float f, byte[] byteBuffer) {
-    bb.position(0);    
+    bb.position(0);
     b4 = bb.putFloat(f).array();
     checkReverse(b4);
     for (int j=0; j<4; j++) byteBuffer[j] = b4[j];

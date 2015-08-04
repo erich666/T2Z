@@ -84,11 +84,15 @@ color BlockColor = color(255);  // white block
 color SliceColor = ModelColor;  // slices default to model color
 
 /* 
-The colors for animated gifs are selected by a neural net. It takes a single argument that
-is undocumented, but smaller values are supposed to result in better color selections. They
-recommend a value of 10. I found 7 is nicer, though 25% slower. I figure that's worth it. 
+The colors for animated gifs are selected by a neural net. 10 is the default, higher qualities
+are supposed to give better results, but in fact lower values are better, but slower. We err on
+the side of quality over speed; even then, you might wish to output PNG images and use a utility
+such as ImageMagick to turn the frames into a GIF. See http://extrapixel.github.io/gif-animation/
+for what appears to be the somewhat-incorrect documentation.
+We use 7 here; it's 25% slower than 10, but seems to give appreciably better quality. Set to 0
+for maximum (?) quality.
 */
-int GifCompressionQuality = 7;  
+int GifCompressionQuality = 7;
 
 int Border = 1;  // width in pixels of border around the image given to the marcher; normally 1
 
@@ -231,7 +235,7 @@ boolean confirmExitWithDialog() {
    
 // put up a warning dialog and also print the warning to the output window
 void reportWarning(String procname, String warning) {
-  String message = "Warning from function "+procname+"()";  
+  String message = "Warning from function "+procname+"()";
   String title = warning;
   G4P.showMessage(this, message, title, G4P.WARNING);
   println(message+": "+title);
@@ -239,7 +243,7 @@ void reportWarning(String procname, String warning) {
    
 // put up an error dialog and also print the warning to the output window
 void reportError(String procname, String error) {
-  String message = "Error from function "+procname+"()";  
+  String message = "Error from function "+procname+"()";
   String title = error;
   G4P.showMessage(this, message, title, G4P.ERROR);
   println(message+": "+title);

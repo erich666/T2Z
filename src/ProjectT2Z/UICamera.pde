@@ -139,7 +139,7 @@ void SaveAnimationButtonToggled() {
     DrawMode = DRAW_MODE_SAVE_ANIM;
     turnOffAllControls();  
   } else {
-    reportWarning("SaveAnimationButtonToggled", "You haven't selected anything to save");    
+    reportWarning("SaveAnimationButtonToggled", "You haven't selected anything to save");
     SaveAnimationButton.setState(0);  // undo the automatic state change
   }
 }    
