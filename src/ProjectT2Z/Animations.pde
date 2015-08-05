@@ -305,9 +305,8 @@ How to create an animation:
  and you draw a frame with 3 circles that are white, yellow, and green, the 
  output image (saved as a gif animation or PNG files) will be a black 
  background with white, yellow, and green circles, and that's what you'll 
- see when  you run the animation. But the slice of the 3D model corresponding 
- to that frame will be all air, except for red material where the three 
- circles were located.
+ see when  you run the animation. But the 3D model corresponding will be 
+ all air, except for red material where the three circles were located.
  
  Setting BackgroundColor is REQUIRED. The other two will default to white if 
  you don't set them yourself. 
@@ -415,10 +414,17 @@ void buildAnimatorList() {
   //AnimatorList.add(new BallBurst());
   AnimatorList.add(new TrailSpin());
 
-  // complex, wacky, and otherwise non-basic animations.
-  // Note that many of these are hacks and experiments,
-  // and so have little documentation. Don't be afraid
-  // to get into the code and start mucking about!
+  /* Complex, wacky, and otherwise non-basic animations.
+  Note that many of these are hacks and experiments,
+  and so have little documentation. Don't be afraid
+  to get into the code and start mucking about!
+  These are listed in the order in which they appear in
+  the file. We recommend maintaining that convention, so
+  if you add some new animations, put them into this list
+  in the same place you put them in the file below. Probably
+  the best place is at the end of the "normal" animators,
+  and just before the three special ones at the end.
+  */
   
   //AnimatorList.add(new DoubleChainSpin());
   AnimatorList.add(new HackMe());
@@ -442,16 +448,22 @@ void buildAnimatorList() {
   AnimatorList.add(new Jephthai());
 
   
-  // "Animators" that instead read an animated GIF or set of PNG frames
-  // for forming a sculpture.
-  // Note that the Processing animated GIF reader does not properly
-  // interprete all compression types for animation, so you can get bad frames.
+  /*
+  The last three Animators are weird special cases that break some of the
+  rules. So don't use them as the basis for your own code! They're here
+  because we decided they were useful enough to include, even though they 
+  cheat here and there.
+  The first two read either an animated GIF or a set of PNG frames in a
+  directory. The third one treats a single gif as a height field and builds
+  a 3D model from it. Note that the GIF reader we're using does not 
+  properly interpret all compression types for animated GIFs, so you can
+  get some bad frames. If that happens, try pulling the frames apart into
+  separate files using some other program, and then use the FolderOfGFrames
+  animator on those images.
+  */
   // AnimatorList.add(new AnimatedGifReader());
   // AnimatorList.add(new FolderOfFramesReader());
-  
-  // This one reads a grayscale height field image and converts it to a 3D model.
   // AnimatorList.add(new HeightField());
-
 }
 
 // ================= One Rotating Square
@@ -724,9 +736,6 @@ class TrailSpin extends Animator {
       addSlider(sliders, NumBallsLabel, 0, 10, NumBalls, true);
       addSlider(sliders, BallRadiusLabel, 0, .5, BallRadius, false);
       addSlider(sliders, InnerDistanceLabel, 0, .4, InnerDistance, false);
-
-      ModelColor = color(240, 45, 35);   // model is red
-      BlockColor = color(220, 205, 145); // block is yellow-ish
    }
 
    void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -740,7 +749,9 @@ class TrailSpin extends Animator {
    }
 
    void restart() {
-      BackgroundColor = color(255, 205, 180); // Important! Set background color
+      BackgroundColor = color(80, 10, 75); // background is dark purple
+      ModelColor = color(240, 45, 35);   // model is red
+      BlockColor = color(220, 205, 145); // block is yellow-ish
    }
 
    void render(float time) {
@@ -766,6 +777,7 @@ class TrailSpin extends Animator {
           if (i%2 == 0) rsgn = SpeedChangeFactor;
           if (rsgn == 0) rsgn = 1;
           rotate(rsgn * TWO_PI * (time+a));
+          
           for (int b=0; b<NumBalls; b++) {
             rotate(TWO_PI * OffsetPerRing * b);
             float ba = norm(b, 0, NumBalls-1);
@@ -773,7 +785,9 @@ class TrailSpin extends Animator {
             int numSteps = int(TWO_PI * TrailLen * bdist / (ballr/4.));
             for (int n=0; n<numSteps; n++) {
               float na = norm(n, 0, numSteps-1);
-              fill(255, 255, 255, na*255);
+              color rust = color(220, 110, 70);
+              color paleYellow = color(240, 230, 125);
+              fill(lerpColor(rust, paleYellow,a), na*255);
               pushMatrix();
                 rotate(na * TWO_PI * TrailLen);
                 ellipse(bdist, 0, 2*ballr, 2*ballr);
@@ -1057,7 +1071,7 @@ class HackMe extends Animator {
 
   HackMe() {
     super("Hack Me");
-    // arguments: sliders, String label, minimum, maximum, variable to change, integer?
+    // arguments: sliders, String label, minimum, maximum, variable to change, is integer?
     addSlider(sliders, RingsLabel, 1, 4, Rings, true);  // "true" - it's an integer
     addSlider(sliders, RadiusLabel, .01, .3, Radius, false);  // "false" - it's a floating point number
     addSlider(sliders, ModeLabel, 0, 3, Mode, true);  // "true" - it's an integer
@@ -2241,7 +2255,7 @@ This animator demonstrates the use of a Stepper323 object to control a multi-ste
 Create a Stepper323 by giving it an array of floats. The number of floats is implicitly
 the number of steps. The floats give the relative duractions of the phases. They don't have
 to add up to 1. So if you want 3 phases of relative lengths 1:3:2, you could use the
-array {1,3,2} or {2,6,4} or {.3,.9.,6}. Just stick to numbers > 0. Later we can hand the
+array {1,3,2} or {2,6,4} or {.3,.9,.6}. Just stick to numbers > 0. Later we hand the
 Stepper a floating-point time value, and we get back the step number we're in (starting 
 with 0) and the "alfa" value telling us where in the interval we are (this runs 0-1),
 by handing the value of time to getStepNum() and getAlfa() respectively. You may pre-shape 
@@ -2282,11 +2296,12 @@ class Dissection01 extends Animator {
     float[] stepLengths = { 1, 1.2 }; 
     Stepper = new Stepper323(stepLengths);
      
-    // Here I'll set all the eases to linear.
+    // Here I'll set all the eases to linear. Uncoment the next line to see the effect.
     //Stepper.setAllEases(AULib.EASE_LINEAR);
     
     // Here I'll set the first to be the default S-shape, the second a little antipate-move-bounce
     int[] easeTypes = { AULib.EASE_IN_OUT_CUBIC, AULib.EASE_ANTICIPATE_ELASTIC };   
+    // Uncomment the next line to set these eases to the different steps.
     //Stepper.setEases(easeTypes);
   }
   
@@ -2493,7 +2508,6 @@ class Dissection03 extends Animator {
   Dissection03() {
     super("Dissection 03");
     addSlider(sliders, SizeLabel, 0.01, 2.0, Size, false);
-    ModelColor = clr1;
   }
   
   void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -2514,6 +2528,7 @@ class Dissection03 extends Animator {
     */
     float[] stepLengths = { 144, 96, 12 }; // relative lengths
     Stepper = new Stepper323(stepLengths);
+    ModelColor = clr1;
   }
   
   void render(float time) { 
@@ -3782,7 +3797,7 @@ sliders to determine the size and length of the animation. But of course
 animated gifs have their own built-in values for these numbers. The program
 will respect the sliders, not the values in the file. So for best results, set
 your FrameSize and NumFrames sliders to match the values from the file. Don't
-sweat it if you can't dial it in exactly; within a few frames or pixels is
+sweat it if you can't dial these in exactly; within a few frames or pixels is
 usually fine. I print out the file's values to help you set these properly.
 */
 
