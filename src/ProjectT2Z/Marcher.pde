@@ -414,7 +414,10 @@ class Marcher {
           Corner[count] = new PVector();
   
           Corner[count].x = (float)x;
-          Corner[count].y = (float)y;
+          // Note: Processing considers the upper left corner the origin of the image. but
+          // 3D models use lower left and Z going up as the origin. To keep with this mental
+          // model of stacking the frames vertically, we flip Y here and for the offset below.
+          Corner[count].y = (float)-y;
           Corner[count].z = (float)z;
           count++;
         }
@@ -545,7 +548,9 @@ class Marcher {
           }
           // Prepare to make triangles. Set the offset value for where we are in the voxel grid.
           offset.x = x;
-          offset.y = y;
+          // Processing uses the upper left corner as the origin of the image, we want the lower left corner
+          // and Z up for the origin, so we negate y here and also for the Corner location.
+          offset.y = -y;
           offset.z = SliceNumber;
           // We now have 3 to 12 (or something) interpolated edge points. Look up in the table
           // which points make up what triangles.
@@ -562,7 +567,9 @@ class Marcher {
             int index2 = TriTable[cubeIndex + i + 1];
             int index3 = TriTable[cubeIndex + i + 2];
 
-            saveTriangle( offset, EdgePoint[index1], EdgePoint[index2], EdgePoint[index3], facetColor );
+            // Triangles are output in counterclockwise order. Note that due to our y sign negation
+            // above (see the offset comment), we also reverse the order here.
+            saveTriangle( offset, EdgePoint[index3], EdgePoint[index2], EdgePoint[index1], facetColor );
             // next triangle, or end of list
             i += 3;
           }
