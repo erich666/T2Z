@@ -85,17 +85,24 @@ will be your guides.
 <h1>Installation</h1>
 <p>
 To get started, download and install these two
-free, open-source programs and install them.
+free, open-source programs.
 Both have versions for Windows, Mac OSX, and Linux.
 </p>
 <ul>
-<li><a href="http://www.processing.org" target="_new">Processing</a>: 
+<li><a href="http://www.processing.org" target="_new">Processing version 2.2.1</a>: 
 This is a graphics programming language based on Java. 
 There's an IDE (Integrated Programming Environment - basically
 an editor along with buttons to let you run your program).
 You'll be running the system from within Processing.
+<b>Be sure to get version 2.2.1!</b>. 
+Because version 3 makes big changes to the Processing internals,
+the libraries we rely on are not
+compatible with Processing version 3, or any of the beta
+releases of that version.
+You may have to scroll down to the <em>Stable Releases</em>
+section to find version 2.2.1.
 </li>
-<li><a href="http://meshlab.sourceforge.net/" target="_new">MeshLab</a>:
+<li><a href="http://meshlab.sourceforge.net/ target="_new">MeshLab</a>:
 This is a great program for interactively viewing your 3D models.
 </ul>
 <p>
@@ -125,7 +132,7 @@ one by one, and install each one:
 <ul>
 <li>Andrew's Utilities (AULib)</li>
 <li>G4P</li>
-<li>gifAnimation</li>
+<li>gifExporter</li>
 </ul>
 
 <p>
@@ -185,9 +192,9 @@ When you want to quit, you can do that in four ways:
 </p>
 <ul>
 <li>Click the <em>Exit</em> button in the <em>Sculpture Controls</em> window 
-(upper-right in the figure), and confirm you want to quit.</li>
-<li>Move the mouse into the <em>Sketch Window</em> (lower-right 
-in the figure) and press the escape key on your keyboard.</li>
+(the one with the red background), and confirm you want to quit.</li>
+<li>Move the mouse into the <em>Sketch Window</em> 
+and press the escape key on your keyboard.</li>
 <li>Click the close box on the <em>Sketch Window</em>.</li>
 <li>Click the square <em>Stop</em> button in the Processing IDE.</li>
 </ul>
@@ -209,6 +216,85 @@ controls and one where you preview your animation.
 The four windows of the UI.
 </figcaption>
 </figure>
+
+
+<h1>Quick Start</h1>
+
+<p>
+Let's make some stuff happen.
+</p>
+<p>
+In the <em>Animation Controls</em> window (the one with 
+a light-green background),
+choose an animation from the drop-down list at the top.
+Click on the dark blue bar at the far right to choose an animation.
+The sliders will change to display the controls for that animation.
+</p>
+<p>
+Click the <em>Run Animation</em> button in the <em>Camera Controls</em>
+window (the one with a yellow background).
+Your animation should run in the <em>Sketch Window</em>.
+While it's running, feel free to move the sliders around until
+you get an animation loop you like.
+</p>
+<p>
+If one of the sliders is red,
+and you move it,
+the animation will stop. 
+Making a slider red is a hint from the animation author that this
+slider controls some computation that can take a little while
+(usually a second or two). So if you move one of these sliders,
+the animation stops. You can continue to move the rest of the sliders
+if you want. To get the animation running, 
+push the <em>Run Animation</em> button again.
+</p>
+<p>
+When you have the animation the way you want,
+press the red <em>Stop Animation</em> button (that's what the
+<em>Run Animation</em> button turns into when you press it).
+</p>
+<p>
+To save your animation as an animated gif, check the box 
+labeled <em>Build GIF Animation</em> in the
+bottom-right of the <em>Camera Controls</em> window,
+and then press <em>Record Animation</em>.
+You'll see a single cycle of your animation play and
+then automatically stop.
+If you look in your T2Z directory, you'll see a gif file
+with the name of your chosen animation, followed by the time
+of creation. This is ready for sharing and posting to
+social media.
+</p>
+<p>
+If you'd like to save the individual frames, check the
+<em>Save PNG Frames</em> button, and then press
+<em>Record Animation</em>. The frames will show up in the T2Z
+folder, in a folder given by the name in the 
+text box labeled <em>PNG File Directory</em> at the top of the 
+window.
+</p>
+<p>
+If you want, you can save both an animated GIF and the PNG 
+files at the same time.
+Keep in mind that you must press <em>Record Animation</em>
+to save your results;
+pressing <em>Run Animation</em> will simply play it
+without saving anything.
+</p>
+<p>
+When you're ready to save your animation for 3D printing,
+press the big <em>Build Sculpture</em> button in the
+<em>Sculpture Controls</em> window (the one with the red background).
+In your T2Z folder you'll see an STL file that uses the name
+that's in the upper-left of this panel
+(because we're sure your creations will be amazing,
+we've given that file the default name Amazohedron.stl,
+but you can change it to anything you like).
+You can then send your STL file to your 3D printer,
+if you have one,
+or to one of the 3D printing services to print for you
+(a few are named in the FAQ seciton).
+</p>
 
 
 <h1>Animation Controls</h1>
@@ -457,7 +543,11 @@ You can also open the model in
 and check it out!
 Hint: if you use the same name every time,
 you can just hit the refresh button in MeshLab
-to re-load your model.
+to re-load your model. 
+On some platforms (like Windows)
+MeshLab has a bug, 
+requiring you to jiggle the view a bit with the
+mouse to get it to refresh.
 </li>
 <li><b>Exit</b> button:
 Press this to bring up a dialog box 
