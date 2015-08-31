@@ -101,75 +101,155 @@ compatible with Processing version 3, or any of the beta
 releases of that version.
 You may have to scroll down to the <em>Stable Releases</em>
 section to find version 2.2.1.
+</p>
+<p>
+If you want to use Processing to develop your own programs,
+you'll probably want to use Processing 3.
+See the section below on how to install both versions successfully.
+</p>
 </li>
 <li><a href="http://meshlab.sourceforge.net/ target="_new">MeshLab</a>:
 This is a great program for interactively viewing your 3D models.
 </ul>
+<h4>Running both Processing 2 and Processing 3</h4>
+<p>
+Happily, you can have both version 2 (which I'll call P2) 
+and version 3 (which I'll call P3) installed side by side,
+though you should only be running one at a time.
+To enable this, you need to do a few things.
+First, install both programs:
+</p>
+<ol>
+<li>Download and install Processing 2.2.1. </li>
+<li> When the
+installation is finished, find the installed program
+and rename it <em>ProcessingV2</em>.
+If you're on a Mac, you'll find your installed program
+inside <em>/Applications</em>. 
+On a PC, it's at TK.
+</li>
+<li>Start your new ProcessingV2, and once it's up 
+and running, exit (that is, choose <em>Processing/Quit Processing</em>
+from the menu).</li>
+<li>Download and install Processing 3 (whatever version is on the front page)</li>
+<li>Start your new version 3 Processing. 
+If it asks you if you want to make a Sketchbook, say no.
+Once it's open,
+choose <em>Processing/Preferences...</em>.
+At the bottom of the pop-up window it will tell you the location
+of your preferences file.
+Copy that into some other window or write it down;
+we'll need it later.
+Now quit Processing.
+</li>
+</ol>
+<p>
+Now that you have both programs installed, you need to tell them
+how to stay out of each other's way. Processing keeps all your
+libraries and other files in a folder it calls your <em>Sketchbook</em>.
+By default both P2 and P3 refer to the same folder, which isn't good.
+So let's point them to different places.
+</p>
+<ol>
+<li>Go to the default location for your Sketchbook.
+On the Mac, it's at 
+<pre>/Users/YourNameHere/Documents</pre>
+and on a PC, it's at
+<pre>/Users/YourNameHere/Documents</pre>
+In this folder, make a new folder called
+<pre>ProcessingV2</pre>.</li>
+<li>Open the preferences file that you copied or wrote
+down from the Preferences window above.
+This is a plain-text file, so you can use any text editor.
+Around line 105, 
+you'll find two entries starting
+with the word <em>sketchbook</em>.
+If you're on a Mac, set them as follows,
+replacing <em>YourNameHere</em> with your user name:
+<pre>
+sketchbook.path=/Users/YourNameHere/Documents/ProcessingV2 
+sketchbook.path.three=/Users/YourNameHere/Documents/Processing
+</pre>
+If you're on a PC, set them this way:
+<pre>
+TK
+TK
+</pre>
+</li>
+<li>Again run, and then quit, version 2.</li>
+<li>Again run, and then quit, version 3.</li>
+</ol>
+<p>
+That's it, now both versions of Processing will have their
+own sketchbooks, and they should co-exist happily.
+Remember to only run one at a time.
+</p>
+<p>
+Note that when you're running Processing 2.2.1 it may occasionally
+prompt you to upgrade to the newer version.
+Say no! 
+You already have version 3 installed,
+and you don't want to replace your version 2 copy as long
+as you're planning to run T2Z.
+</p>
+<h3>Installing Libraries</h3>
 <p>
 You'll also need to install three Processing libraries.
-The easiest way to install the libraries is to run Processing
-and let it do the installation itself,
-using its built-in the Library Manager.
-To open up the Library Manager, 
-go to the menu bar, and choose
-<em>Sketch/Import Library.../Add Library</em>,
-as shown in the figure below.
-You'll get a pop-up menu, also, shown in the figure.
+The easiest way to do this is using Processing's built-in
+tools, and indeed that's how we recommend adding libraries
+when you're running Version 3.
 </p>
-
-<figure>
-<img src="images/LibraryManager.png" alt="The Library Manager." width="100%">
-<figcaption>
-Left: Choosing the Library Manager.
-Right: The Library Manager.
-</figcaption>
-</figure>
-
 <p>
-From the pop-up, choose these three libraries
-one by one, and install each one:
+Unfortunately, if you use the automatic installer for
+Version 2 it seems to be sometimes incorrectly
+retreive libraries for Version 3, which creates all kinds
+of mess.
+So we'll next get working copies of the libraries for Version 2,
+and then manually install them.
 </p>
-<ul>
-<li>Andrew's Utilities (AULib)</li>
-<li>G4P</li>
-<li>gifAnimation</li>
-</ul>
-<p>
-<b>Note:</b> You need the version of Andrew's Utilities
-that has (AULib) at the end of the name,
-so it appears exactly as written above.
-If you don't see that,
-Processing is showing you an old version.
-Don't download it,
-but instead manually install it using the instructions 
-in the next paragraph.
-</p>
-
-<p>
-If you don't see one of these libraries in your list,
-you can download and install them manually.
-Here's where to get each zip file:
-</p>
-<ul>
-<li> AULib: Click <a href="http://www.imaginary-institute.com/resources/AULibrary/AULibrary.php" target="_blank">here</a>, scroll down to <em>Installing the AU Library</em>, and click on the link in the second paragraph.</li>
-<li>G4P: Click <a href="http://sourceforge.net/projects/g4p/" target="_blank">here</a>.</li>
-<li>gifAnimation: Click <a href="http://extrapixel.github.io/gif-animation/" target="_blank">here</a>.</li>
-</ul>
-<p>
-To install a library, unzip it so you have a folder
-of the library's name. Then drag that folder into
-Processing's <em>libraries</em> folder. On Windows, this
-folder is at
+<ol>
+<li>Go to our
+<a href="http://erich.realtimerendering.com/t2z/downloads/" target="_blank">downloads page</a>,
+right-click on each of the three zip files,
+and save them somewhere where you can find them again
+(e.g., your Downloads folder, or your desktop).</li>
+<li>Double-click on each zip file to expand it. It should produce
+a folder of the same name as the zip file.</li>
+<li>Now copy those folders (which contain the libraries) into
+your Processing Version 2 libraries folder.
+If you used the directions above to install both version 2 and version 3,
+this folder is at
 <pre>
-C:\Users\YourName\Documents\Processing\libraries
+/Users/YourNameHere/Documents/ProcessingV2/libraries
 </pre>
-and on Mac OS X, it's at
+on a Mac, and
 <pre>
-/Users/YourName/Documents/Processing/libraries
+TK
 </pre>
-
+on a PC.
 </p>
-
+<p>
+If you didn't install both versions,
+the libraries folder is
+<pre>
+/Users/YourNameHere/Documents/Processing/libraries
+</pre>
+on a Mac, and
+<pre>
+TK
+</pre>
+on a PC.
+<b>Make sure you're copying your folders into the Processing 2 libraries folder!</b>.
+If you accidentally put them into the Processing 3 folder,
+they won't show up in Processing 2, and they
+won't work in Processing 3, either.
+</li>
+</ol>
+<p>
+That's it! In time, all of this version 2/version 3 stuff will probably
+get smoothed out and things will get much simpler.
+</p>
+<h3>Installing T2Z</h3>
 <p>
 Finally, download and install our code itself.
 </p>
@@ -191,11 +271,20 @@ so don't change the name.
 <h1>Running the Program</h1>
 
 <p>
-Open the folder and double-click on 
+If you didn't install Processing version 3,
+then simply
+open the <em>T2Z</em> folder and double-click on 
 the file <em>ProjectT2Z.pde</em>.
 That should open up Processing, and you'll see something
 like the figure below.
-If that doesn't happen, start Processing manually,
+</p>
+<p>
+If you have both version 2 and version 3 installed,
+you'll need to manually start version 2 and then
+open the program,
+since double-clicking on the pde file will open
+version 3, which is incompatible with T2Z.
+So start Processing version 2 manually,
 then choose <em>File/Open...</em> from the menu bar,
 and open the file <em>ProjectT2Z.pde</em> in the <em>ProjectT2Z</em>
 folder you unzipped during installation.
