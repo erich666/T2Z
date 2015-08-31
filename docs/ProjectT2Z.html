@@ -113,7 +113,13 @@ This is a great program for interactively viewing your 3D models.
 </ul>
 <h4>Running both Processing 2 and Processing 3</h4>
 <p>
-Happily, you can have both version 2 (which I'll call P2) 
+If you just want to run T2Z, then you're set:
+you have Processing 2.2.1, and you can skip this section and
+jump down to <em>Installing Libraries</em>.
+If, however, you want to also run Processing 3,
+then here's how you can have both.
+</p>
+<p>Happily, you can have both version 2 (which I'll call P2) 
 and version 3 (which I'll call P3) installed side by side,
 though you should only be running one at a time.
 To enable this, you need to do a few things.
@@ -164,6 +170,12 @@ This is a plain-text file, so you can use any text editor.
 Around line 105, 
 you'll find two entries starting
 with the word <em>sketchbook</em>.
+These entries may change as Processing 3 goes through
+its beta phase, so use the settings below
+as a guide, and adapt them to what you actually see in the
+file when you open it up.
+</p>
+<p>
 If you're on a Mac, set them as follows,
 replacing <em>YourNameHere</em> with your user name:
 <pre>
@@ -172,7 +184,8 @@ sketchbook.path.three=/Users/YourNameHere/Documents/Processing
 </pre>
 If you're on a PC, set them this way:
 <pre>
-(to be done...)
+sketchbook.path=C:\Users\YourNameHere\Documents\ProcessingV2 
+sketchbook.path.three=C:\Users\YourNameHere\Documents\Processing
 </pre>
 </li>
 <li>Again run, and then quit, version 2.</li>
@@ -190,6 +203,10 @@ Say no!
 You already have version 3 installed,
 and you don't want to replace your version 2 copy as long
 as you're planning to run T2Z.
+</p>
+<p>
+That's it. In time, all of this version 2/version 3 stuff will probably
+get smoothed out and things will get much simpler.
 </p>
 <h3>Installing Libraries</h3>
 <p>
@@ -216,38 +233,26 @@ and save them somewhere where you can find them again
 a folder of the same name as the zip file.</li>
 <li>Now copy those folders (which contain the libraries) into
 your Processing Version 2 libraries folder.
-If you used the directions above to install both version 2 and version 3,
-this folder is at
-<pre>
-/Users/YourNameHere/Documents/ProcessingV2/libraries
-</pre>
-on a Mac, and
-<pre>
-(to be done...)
-</pre>
-on a PC.
-</p>
-<p>
-If you didn't install both versions,
-the libraries folder is
+If you didn't install Version 3 using the directions above,
+then copy your three library folders into
 <pre>
 /Users/YourNameHere/Documents/Processing/libraries
 </pre>
-on a Mac, and typically
+on a Mac, or
 <pre>
 C:\Users\YourNameHere\Documents\Processing\libraries
 </pre>
 on a PC.
+</p>
+<p>
+If you did install Version 3 as above, then
+replace <em>Processing</em> in these paths with <em>ProcessingV2</em>.
 <b>Make sure you're copying your folders into the Processing 2 libraries folder!</b>.
 If you accidentally put them into the Processing 3 folder,
 they won't show up in Processing 2, and they
 won't work in Processing 3, either.
 </li>
 </ol>
-<p>
-That's it! In time, all of this version 2/version 3 stuff will probably
-get smoothed out and things will get much simpler.
-</p>
 <h3>Installing T2Z</h3>
 <p>
 Finally, download and install our code itself.
