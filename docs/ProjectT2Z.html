@@ -782,7 +782,7 @@ Normally you want to avoid rapidly moving small objects in your animation, as th
 When you make a final export, crank up the number of frames, frame size, and snapshots per frame to their maximums. The build will go much slower, but the resulting mesh will be more detailed and smoother.
 </p>
 <p>
-At this high quality the STL model file produced is huge. To make your mesh small enough to upload successfully, we recommend <a href="http://meshlab.sourceforge.net/">MeshLab</a> for quick mesh simplification. See <a href="https://youtu.be/w_r-cT2jngk?t=99">this short bit of video</a> for how to use it. Reducing to 1.3 million faces and exporting the mesh as an STL is sufficient for upload to Shapeways, for example.
+At this high quality the STL model file produced is huge. To make your mesh small enough to upload successfully, we recommend <a href="http://meshlab.sourceforge.net/">MeshLab</a> for quick mesh simplification. See <a href="https://youtu.be/w_r-cT2jngk?t=99">this short bit of video</a> for how to use it. To sum up: use Filters | Remeshing | Quadric Edge Collapse Decimation. Check "Preserve Topology." Set target number of faces to 1300000 (1.3 million) for <a href="http://shapeways.com">Shapeways</a>, then Apply, then Close. File | Export Mesh As... and export the mesh as an STL.
 </p>
 </ul>
 

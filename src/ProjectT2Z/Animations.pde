@@ -412,7 +412,7 @@ void buildAnimatorList() {
   //AnimatorList.add(new LissajousBall());
   //AnimatorList.add(new SpinningDial());
   //AnimatorList.add(new BallBurst());
-  AnimatorList.add(new TrailSpin());
+  //AnimatorList.add(new TrailSpin());
 
   /* Complex, wacky, and otherwise non-basic animations.
   Note that many of these are hacks and experiments,
@@ -427,8 +427,9 @@ void buildAnimatorList() {
   */
   
   //AnimatorList.add(new DoubleChainSpin());
-  AnimatorList.add(new HackMe());
   AnimatorList.add(new Wobbly());
+  AnimatorList.add(new HackMe());
+  //AnimatorList.add(new DancingCobras());
   
   AnimatorList.add(new Merge());
   AnimatorList.add(new Shift());
@@ -1187,6 +1188,101 @@ void polygon(float x, float y, float radius, int npoints) {
   }
   endShape(CLOSE);
 }
+
+// ================= Dancing Cobras
+
+class DancingCobras extends Animator {
+  int Cobras = 8;
+  float Radius = 0.05;
+  float Swing = 0.445;
+  int Mode = 0;
+
+  String CobrasLabel = "cobras";
+  String RadiusLabel = "radius";
+  String SwingLabel = "swing";
+  String ModeLabel = "mode";
+
+  DancingCobras() {
+    super("Dancing Cobras");
+    // arguments: sliders, String label, minimum, maximum, variable to change, is integer?
+    addSlider(sliders, CobrasLabel, 1, 16, Cobras, true);  // "true" - it's an integer
+    addSlider(sliders, RadiusLabel, .01, .3, Radius, false);  // "false" - it's a floating point number
+    addSlider(sliders, SwingLabel, .0, .5, Swing, false);  // "false" - it's a floating point number
+    addSlider(sliders, ModeLabel, 0, 2, Mode, true);  // "true" - it's an integer
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    // for each slider above, add a line here with the label, variable name, and integer/float value.
+    if (sliderName == CobrasLabel) Cobras = iValue;
+    if (sliderName == RadiusLabel) Radius = fValue;
+    if (sliderName == SwingLabel) Swing = fValue;
+    if (sliderName == ModeLabel) Mode = iValue;
+  }
+
+  void restart() {
+    // the background color: 0-255 for red, green, and blue 
+    BackgroundColor = color(180, 205, 255);
+    ModelColor = color(0, 139, 126);
+  }
+
+  // This gets called to make a frame. Time goes from 0.0 to 1.0 (well, 0.9999999...)
+  void render(float time) {
+    // Set the background color. For sculpture output this identifies the "outside" color.
+    // Note that you can also draw with this color to "carve" out elements from an animation.
+    background(BackgroundColor);
+
+    // Set this so that objects don't have outline edges. Edge thickness can be a bit tough
+    // to control if you use "scale" at all.
+    noStroke();
+
+    // This "final" translation moves everything to the middle of the screen, and is used
+    // on all objects. I wouldn't touch it if I were you...
+    translate(Awidth/2., Aheight/2.);
+
+    for (int cobra=0; cobra < Cobras; cobra++) { 
+      // The RGB color you'll fill objects with. 
+      fill((cobra*123531+192)%255,(cobra*8233+31)%255,(cobra*2933+73)%255);
+      // Isolate each object's transforms: apply them, draw the object, then pop to remove them.
+      pushMatrix();
+      float objOffset = norm(cobra, 0, Cobras);
+
+      // Rotate the object around a center point, depending on the object number itself.
+      rotate(PI * objOffset);
+ 
+      // Move the object out from the origin.
+      // Multiply by 0.47 (or less) times the frame width (a number of pixels) to keep the objects inside the frame.
+      translate( Swing * Awidth * cos(PI * (objOffset + 2.0 * time) ), 0.0 );
+
+      // Draw a different object depending on the mode number.
+      // Find more basic objects at https://processing.org/examples/shapeprimitives.html
+      switch ( Mode ) {
+      case 0:
+        // circle: x & y location, x & y diameter
+        ellipse(0.0, 0.0, Awidth*2.*Radius, Awidth*2.*Radius);
+        break;
+
+      case 1:
+        // get fancy: spin the rectangle itself around its center
+        rotate(TWO_PI * objOffset);
+
+        // rectangle: x & y upper corner, x & y dimensions
+        rect(-(Awidth*Radius)/2., -(Awidth*Radius), Awidth*Radius, Awidth*Radius*2.);
+        break;
+
+      case 2:
+        // polygon - in this case, a pentagon
+        // x,y location, radius, number of points
+        polygon( 0, 0, Awidth*Radius, max(Cobras,3) );
+        break;
+      } // end of object draw switch
+        
+      // Remove the operations we did to the object, except the translate at the start,
+      // which we want to apply to everything.
+      popMatrix();
+    } // end of cobra loop
+  }
+}
+
 
 // ================= Wobbly
 
