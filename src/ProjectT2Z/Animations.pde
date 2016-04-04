@@ -429,7 +429,7 @@ void buildAnimatorList() {
   //AnimatorList.add(new DoubleChainSpin());
   AnimatorList.add(new Wobbly());
   AnimatorList.add(new HackMe());
-  //AnimatorList.add(new DancingCobras());
+  AnimatorList.add(new DancingCobras());
   
   AnimatorList.add(new Merge());
   AnimatorList.add(new Shift());
@@ -443,7 +443,7 @@ void buildAnimatorList() {
   AnimatorList.add(new Ag0011());
   //AnimatorList.add(new Ag0012());
   //AnimatorList.add(new Ag0020());
-  AnimatorList.add(new Ag0033());
+  //AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
   AnimatorList.add(new Sphereflake());
   AnimatorList.add(new Jephthai());
