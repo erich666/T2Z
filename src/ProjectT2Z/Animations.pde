@@ -440,11 +440,15 @@ void buildAnimatorList() {
   //AnimatorList.add(new Dissection04());
   //AnimatorList.add(new WindSpinner());
   
+  AnimatorList.add(new Ag0007());
   AnimatorList.add(new Ag0011());
   //AnimatorList.add(new Ag0012());
   //AnimatorList.add(new Ag0020());
+  AnimatorList.add(new Ag0025());
   //AnimatorList.add(new Ag0033());
   //AnimatorList.add(new Ag0035());
+  //AnimatorList.add(new Ag0055());
+  //AnimatorList.add(new Ag0065());
   AnimatorList.add(new Sphereflake());
   AnimatorList.add(new Jephthai());
 
@@ -1208,7 +1212,7 @@ class DancingCobras extends Animator {
     addSlider(sliders, CobrasLabel, 1, 16, Cobras, true);  // "true" - it's an integer
     addSlider(sliders, RadiusLabel, .01, .3, Radius, false);  // "false" - it's a floating point number
     addSlider(sliders, SwingLabel, .0, .5, Swing, false);  // "false" - it's a floating point number
-    addSlider(sliders, ModeLabel, 0, 2, Mode, true);  // "true" - it's an integer
+    addSlider(sliders, ModeLabel, 0, 4, Mode, true);  // "true" - it's an integer
   }
 
   void sliderChanged(String sliderName, int iValue, float fValue) {
@@ -1262,14 +1266,30 @@ class DancingCobras extends Animator {
         break;
 
       case 1:
-        // get fancy: spin the rectangle itself around its center
-        rotate(TWO_PI * objOffset);
-
-        // rectangle: x & y upper corner, x & y dimensions
-        rect(-(Awidth*Radius)/2., -(Awidth*Radius), Awidth*Radius, Awidth*Radius*2.);
+        // circle: x & y location, x & y diameter
+        // widen it so the cross-section is actually a circle
+        float angle = PI * (objOffset + 2.0 * time);
+        ellipse(0.0, 0.0, sqrt(1.+sin(angle)*sin(angle) ) * Awidth*2.*Radius, Awidth*2.*Radius);
         break;
 
       case 2:
+        // get fancy: spin the square itself around its center
+        rotate(PI * objOffset);
+
+        // rectangle: x & y upper corner, x & y dimensions
+        rect(-(Awidth*Radius), -(Awidth*Radius), Awidth*Radius*2., Awidth*Radius*2.);
+        break;
+
+      case 3:
+        // get fancy: spin the rectangle itself around its center, thicken it in the direction of travel
+
+        // rectangle: x & y upper corner, x & y dimensions
+        angle = PI * (objOffset + 2.0 * time);
+        float widthThick = (Awidth*Radius) * sqrt(1.+sin(angle)*sin(angle));
+        rect(-widthThick, -(Awidth*Radius), widthThick*2., Awidth*Radius*2.);
+        break;
+
+      case 4:
         // polygon - in this case, a pentagon
         // x,y location, radius, number of points
         polygon( 0, 0, Awidth*Radius, max(Cobras,3) );
@@ -3112,6 +3132,114 @@ class WindSpinner extends Animator {
 }
 
 
+// ================= Ag0007
+
+class Ag0007 extends Animator {
+  
+  String AspectLabel = "Aspect";
+  String ScaleLabel = "Scale";
+
+  float Aspect = 1.0;
+  float Scale = 1.06;
+  
+  Stepper323 Stepper;
+
+  Ag0007() {
+    super("Ag0007 - Rookery");
+    addSlider(sliders, AspectLabel, 0., 2., Aspect, false);
+    addSlider(sliders, ScaleLabel, 0.1, 1.5, Scale, false);
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    if (sliderName == ScaleLabel)
+    {
+      Scale = fValue;
+      // no reason to reevaluate everything
+      return;
+    }
+    if (sliderName == AspectLabel) Aspect = fValue;
+    if (sliderName == ScaleLabel) Scale = fValue;
+    restart();
+  }
+
+  void restart() {     
+    BackgroundColor = color(255);
+    ModelColor = color(0);
+    float[] stepLengths = { 35, 35, 35, 35 }; 
+    Stepper = new Stepper323(stepLengths);
+  }
+
+  void render(float time) {
+    background(BackgroundColor);
+    noStroke();
+    if ( Aspect != 0.0 & Aspect != 2.0 ) {
+      // there's a gap; things look better if strokes are on, but 3D printing is worse;
+      // comment out this next line for a better print:
+      stroke(ModelColor);
+    } else {
+      noStroke();
+    }
+    fill(ModelColor);
+    int stepNum = Stepper.getStepNum(time);
+    float alfa = Stepper.getAlfa(time);
+    pushMatrix();
+      translate(Awidth/2., Aheight/2.);
+      scale( Scale );
+      switch (stepNum) {
+        case 0: 
+        drawBoxes007(alfa); 
+        break;
+        case 1:
+        pushMatrix();
+          rotate(lerp(0, QUARTER_PI, alfa));
+          drawBoxes007(1.);
+        popMatrix();
+        break;
+        case 2:
+        pushMatrix();
+          rotate(QUARTER_PI);
+          drawBoxes007(1-alfa);
+        popMatrix();
+        break;
+        case 3:
+        pushMatrix();
+          rotate(lerp(QUARTER_PI, HALF_PI, alfa));
+          drawBoxes007(0.);
+        popMatrix();
+        break;
+      }
+    popMatrix();
+  }
+  
+  void drawBoxes007(float alfa) {
+    float R = 150;
+    float s = 70;
+    float beta = atan2(s, R);
+    float m = sqrt(sq(R)+sq(s))-R;
+    for (int i=0; i<4; i++) {
+      pushMatrix();
+        rotate(i*HALF_PI);
+        rect(0, -(R+s), s*(2-Aspect)/2., s); // 12 o'clock
+        rect(R, 0, s, -s*(2-Aspect)/2.);     // 3 o'clock
+        
+        pushMatrix();  // 1 o'clock to 12
+        rotate(lerp(-QUARTER_PI, (-HALF_PI)+beta, alfa));
+        translate(R+lerp(0, m, alfa), 0);
+        rotate(lerp(0, -beta, alfa));
+        rect(0, -Aspect*s/2., s, Aspect*s/2.);
+        popMatrix();
+   
+        pushMatrix();  // 1 o'clock to 3
+        rotate(lerp(-QUARTER_PI, -beta, alfa));
+        translate(R+lerp(0, m, alfa), 0);
+        rotate(lerp(0, beta, alfa));
+        rect(0, 0, s, Aspect*s/2.);
+        popMatrix();
+      popMatrix();
+    }
+  }
+}
+
 // ================= Ag0011
 
 class Ag0011 extends Animator {
@@ -3419,6 +3547,178 @@ class Leaf0020 {
   }
 }
 
+// ================= Ag0025
+
+class Ag0025 extends Animator {
+  
+  String ScaleLabel = "Scale";
+
+  float Scale = 1.0;
+  
+  Stepper323 Stepper;
+
+  Ag0025() {
+    super("Ag0025 - The H");
+    addSlider(sliders, ScaleLabel, 0.1, 1.5, Scale, false);
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    if (sliderName == ScaleLabel)
+    {
+      Scale = fValue;
+      // no reason to reevaluate everything
+      return;
+    }
+    if (sliderName == ScaleLabel) Scale = fValue;
+    restart();
+  }
+
+  void restart() {     
+    BackgroundColor = color(255, 245, 210);
+    ModelColor = color(165, 80, 10);
+    float[] stepLengths = { 1.5, .2, 1, 1.5, 1, .2};
+    Stepper = new Stepper323(stepLengths);
+  }
+
+  void render(float time) {
+    background(BackgroundColor);
+    noStroke();
+    fill(ModelColor);
+    int stepNum = Stepper.getStepNum(time);
+    float alfa = Stepper.getAlfa(time);
+    pushMatrix();
+      switch (stepNum) {
+      case 0: barToH(alfa); break;
+      case 1: barToH(1); break;
+      case 2: HtoPuzzle(alfa); break;
+      case 3: GrowPuzzle(alfa); break;
+      case 4: PuzzleToBar(alfa); break;
+      case 5: PuzzleToBar(1); break;
+      }
+    popMatrix();
+  }
+  
+  void barToH(float alfa) {
+    background(BackgroundColor);
+    float p1 = width * .1;
+    float p3 = 3*p1;
+    float sclx = lerp(5, 1, alfa);
+    float scly = lerp(3, 1, alfa);
+    fill(ModelColor);
+    pushMatrix();
+      translate(Awidth/2., Aheight/2.);
+      scale( Scale );
+      scale(sclx, scly);
+      beginShape();
+        vertex(-p3, -p3);
+        vertex(-p1, -p3);
+        vertex(-p1, -p1);
+        vertex( p1, -p1);
+        vertex( p1, -p3);
+        vertex( p3, -p3);
+        vertex( p3,  p3);
+        vertex( p1,  p3);
+        vertex( p1,  p1);
+        vertex( -p1, p1);
+        vertex(-p1,  p3);
+        vertex(-p3,  p3);
+      endShape(CLOSE);
+    popMatrix();
+  }
+  
+  void HtoPuzzle(float alfa) {
+    background(BackgroundColor);
+    float p1 = width * .1;
+    float p3 = 3*p1;
+    float m = p3 - (p1 * lerp(2, 1, alfa));
+    float h = p3 - (p1 * lerp(0, 1, alfa));
+    fill(ModelColor);
+    pushMatrix();
+      translate(Awidth/2., Aheight/2.);
+      scale( Scale );
+      beginShape();
+        vertex(-p3, -p3);
+        vertex(-p1, -p3);
+        vertex(-p1, -m);
+        vertex( p1, -m);
+        vertex( p1, -p3);
+        vertex( p3, -p3);
+        vertex( p3, -p1);
+        vertex(  h, -p1);
+        vertex(  h,  p1);
+        vertex( p3,  p1);
+        vertex( p3,  p3);
+        vertex( p1,  p3);
+        vertex( p1,   m);
+        vertex(-p1,   m);
+        vertex(-p1,  p3);
+        vertex(-p3,  p3);
+        vertex(-p3,  p1);
+        vertex( -h,  p1);
+        vertex( -h, -p1);
+        vertex(-p3, -p1);
+      endShape(CLOSE);
+    popMatrix(); 
+  }
+  
+  void GrowPuzzle(float alfa) {
+    background(BackgroundColor);
+    float p1 = width * .1;
+    
+    float a = p1 * lerp(2, 3, alfa);
+    float b = p1 * lerp(1, 2, alfa);
+    float c = p1 * lerp(3, 6, alfa);
+    fill(ModelColor);
+    pushMatrix();
+      translate(Awidth/2., Aheight/2.);
+      scale( Scale );
+      beginShape();
+        rotate(alfa * HALF_PI);
+        vertex(-c, -c);
+        vertex(-b, -c);
+        vertex(-b, -a);
+        vertex( b, -a);
+        vertex( b, -c);
+        vertex( c, -c);
+        vertex( c, -b);
+        vertex( a, -b);
+        vertex( a,  b);
+        vertex( c,  b);
+        vertex( c,  c);
+        vertex( b,  c);
+        vertex( b,  a);
+        vertex(-b,  a);
+        vertex(-b,  c);
+        vertex(-c,  c);
+        vertex(-c,  b);
+        vertex(-a,  b);
+        vertex(-a, -b);
+        vertex(-c, -b);
+        vertex(-c, -a);
+      endShape(CLOSE);
+    popMatrix();
+  }
+  
+  void PuzzleToBar(float alfa) {
+    background(ModelColor);
+    float p1 = width * .1;
+    
+    float tleft = p1 * lerp(-2, -5, alfa);
+    float twid = p1 * lerp(4, 10, alfa);
+    float lleft = p1 * lerp(-5, -7, alfa);
+    float rleft = p1 * lerp(3, 5, alfa);
+    fill(BackgroundColor);
+    pushMatrix();
+      translate(Awidth/2., Aheight/2.);
+      scale( Scale );
+      rect(tleft, -5*p1, twid, 2*p1);
+      rect(tleft,  3*p1, twid, 2*p1);
+      rect(lleft, -2*p1, 2*p1, 4*p1);
+      rect(rleft, -2*p1, 2*p1, 4*p1);
+    popMatrix();
+  }
+}
+
 
 // ================= Ag0033
 
@@ -3597,6 +3897,167 @@ class Ag0035 extends Animator {
       rotate(angle+PI);
       arc(0, 0, 2+(2*bigR), 2+(2*bigR), PI-(gap/2.), PI+(gap/2.));
      popMatrix();
+  }
+}
+
+// ================= Ag0055
+
+class Ag0055 extends Animator {
+  
+  String ScaleLabel = "Scale";
+  String ShrinkLabel = "Gap Shrink";
+
+  float Scale = 1.28;
+  float Side, Gap, Wid, Hgt, Angle, GapNow;
+  float GapShrink = 0.5;
+  
+  Stepper323 Stepper;
+
+  Ag0055() {
+    super("Ag0055 - Equality");
+    addSlider(sliders, ScaleLabel, 0.1, 1.5, Scale, false);
+    addSlider(sliders, ShrinkLabel, -0.5, 2.0, GapShrink, false);
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    if (sliderName == ScaleLabel) Scale = fValue;
+    if (sliderName == ShrinkLabel) GapShrink = fValue;
+    restart();
+  }
+
+  void restart() {     
+    BackgroundColor = color(255);
+    ModelColor = color(0);
+    float[] stepLengths = { 2, 4, 2, 1 }; // relative lengths
+    Stepper = new Stepper323(stepLengths);
+    Side = Awidth*0.3;
+    Gap = Side*0.8;
+  }
+
+  void render(float time) {
+    background(BackgroundColor);
+    noStroke();
+    fill(ModelColor);
+    int stepNum = Stepper.getStepNum(time);
+    float alfa = Stepper.getAlfa(time);
+    pushMatrix();
+      switch (stepNum) {
+        case 0: 
+          Wid = 2*Side; 
+          Hgt = Side/2; 
+          GapNow = lerp(0, Gap, alfa); 
+          Angle = 0;
+          drawBoxes0055(); 
+          break;
+        case 1: 
+          Wid = Side * lerp(2, 1, alfa); 
+          Hgt = Side * lerp(.5, 1, alfa);
+          GapNow = Gap*lerp(1, GapShrink, alfa); 
+          Angle = HALF_PI*alfa; 
+          drawBoxes0055();
+          break;
+        case 2: 
+          Wid = Side; 
+          Hgt = Side; 
+          GapNow = Gap * lerp(GapShrink, 0, alfa); 
+          Angle = HALF_PI;
+          drawBoxes0055();
+          break;
+        case 3: 
+          Wid = 2*Side; 
+          Hgt = Side/2; 
+          GapNow = 0; 
+          Angle = 0;
+          drawBoxes0055(); 
+          break;
+        default:
+      }
+    popMatrix();
+  }
+  
+  void drawBoxes0055() {
+    float left = -Wid/2.;
+    float top = -((GapNow/2.)+Hgt);
+    translate(Awidth/2., Aheight/2.);
+    scale( Scale );
+    rotate(Angle);
+    rect(left, top, Wid, Hgt);
+    rect(left, top+Hgt+GapNow, Wid, Hgt);
+  }
+}
+
+// ================= Ag0065
+
+class Ag0065 extends Animator {
+  
+  String ScaleLabel = "Scale";
+  String StrokeWidthLabel = "Stroke Width";
+  String BigRadiusLabel = "Big Radius";
+  String SmallRadiusLabel = "Small Radius";
+  String BigFrequencyLabel = "Big Cycles";
+  String SmallFrequencyLabel = "Small Cycles";
+  String BigAmplitudeLabel = "Big Amplitude";
+  String SmallAmplitudeLabel = "Small Amplitude";
+  String NumDotsLabel = "Number of Dots";
+
+  float Scale = 1;
+  float StrokeWidth = 50;
+  float BigR = 0.44;
+  float SmallR = 0.22;
+  float BigF = 3;  // cycles per second
+  float SmallF = 2;
+  float BigA = 0.5; // amplitude on each side of 0
+  float SmallA = 0.7;
+  float NumDots = 15;
+
+  Ag0065() {
+    super("Ag0065 derivations");
+    //addSlider(sliders, ScaleLabel, 0.1, 1.5, Scale, false);
+    //addSlider(sliders, StrokeWidthLabel, 1, 200, StrokeWidth, true);
+    addSlider(sliders, BigRadiusLabel, 0.0, 0.5, BigR, false);
+    addSlider(sliders, SmallRadiusLabel, 0.0, 0.5, SmallR, false);
+    addSlider(sliders, BigFrequencyLabel, 1, 5, BigF, true);
+    addSlider(sliders, SmallFrequencyLabel, 1, 5, SmallF, true);
+    addSlider(sliders, BigAmplitudeLabel, 0.0, 2.0, BigA, false);
+    addSlider(sliders, SmallAmplitudeLabel, 0.0, 2.0, SmallA, false);
+    addSlider(sliders, NumDotsLabel, 1, 40, NumDots, true);
+  }
+
+  void sliderChanged(String sliderName, int iValue, float fValue) {
+    if (sliderName == ScaleLabel) Scale = fValue;
+    if (sliderName == StrokeWidthLabel) StrokeWidth = iValue;
+    if (sliderName == BigRadiusLabel) BigR = fValue;
+    if (sliderName == SmallRadiusLabel) SmallR = fValue;
+    if (sliderName == BigFrequencyLabel) BigF = iValue;
+    if (sliderName == SmallFrequencyLabel) SmallF = iValue;
+    if (sliderName == BigAmplitudeLabel) BigA = fValue;
+    if (sliderName == SmallAmplitudeLabel) SmallA = fValue;
+    if (sliderName == NumDotsLabel) NumDots = iValue;
+    restart();
+  }
+
+  void restart() {     
+    BackgroundColor = color(255);
+    ModelColor = color(0);
+  }
+
+  void render(float time) {
+    background(BackgroundColor);
+    strokeWeight(StrokeWidth);
+    fill(ModelColor);
+    stroke(ModelColor);
+    pushMatrix();
+      for (int i=0; i<NumDots; i++) {
+        float alfa = map(i, 0, NumDots, 0, 1);
+        float smallT = (alfa*TWO_PI) + (SmallA * PI * sin(TWO_PI * SmallF * time));
+        float bigT = (alfa*TWO_PI) + (BigA * PI * sin(TWO_PI * BigF * time));
+        float sx = (width/2.) + Scale * (SmallR * Awidth * cos(smallT));
+        float sy = (height/2.) + Scale * (SmallR * Awidth * sin(smallT));
+        float bx = (width/2.) + Scale * (BigR * Awidth * cos(bigT));
+        float by = (height/2.) + Scale * (BigR * Awidth * sin(bigT));
+        line(sx, sy, bx, by);
+      }
+    popMatrix();
   }
 }
 
